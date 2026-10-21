@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>김민석 — 좋아하는 것을 파고드는 사람</title>
+  <meta name="description" content="나를 처음 알게 된 사람에게 내가 무엇을 좋아하고 그것을 어떻게 해왔는지 보여주는 페이지입니다.">
+  <style>
+    /* ===== 기본 설정 ===== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f1115;
+      --surface: #1a1d24;
+      --text: #f2f4f8;
+      --text-dim: #c7cdd8;   /* 대비율 확보: 어두운 배경 위 4.5:1 이상 */
+      --accent: #7aa2ff;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", "Malgun Gothic", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 24px 20px 48px;
+    }
+
+    /* ===== 본문 최대 폭: 가로 넘침 방지 (T01-C12) ===== */
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ===== 헤더 ===== */
+    header { margin-bottom: 32px; }
+
+    .eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 44px);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .lede {
+      font-size: 17px;
+      color: var(--text-dim);
+      max-width: 640px;
+    }
+
+    /* ===== 좋아하는 일 3개 (2단 그리드) ===== */
+    section { margin-bottom: 40px; }
+
+    h2 {
+      font-size: 20px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #2a2f3a;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    /* 1366x768에서 세로가 짧으므로 카드 높이를 압축 */
+    .card {
+      background: var(--surface);
+      border: 1px solid #2a2f3a;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .card h3 {
+      font-size: 17px;
+      margin-bottom: 10px;
+      color: var(--accent);
+    }
+
+    /* 상황·행동·결과: 아직 채울 내용 없음 → 자리 표시 */
+    .card dl { font-size: 14px; }
+    .card dt {
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 8px;
+    }
+    .card dt:first-child { margin-top: 0; }
+    .card dd { color: var(--text-dim); margin-left: 0; }
+
+    /* ===== 취미 ===== */
+    .hobby {
+      display: inline-block;
+      background: var(--surface);
+      border: 1px solid #2a2f3a;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 15px;
+    }
+
+    /* ===== 접이식 상세 (카드 5 상호작용) ===== */
+    details {
+      background: var(--surface);
+      border: 1px solid #2a2f3a;
+      border-radius: 12px;
+      padding: 16px 20px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 16px;
+      list-style: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::before {
+      content: "▸ ";
+      color: var(--accent);
+    }
+    details[open] summary::before { content: "▾ "; }
+
+    /* 키보드 초점 표시 (T01-C14) */
+    summary:focus-visible,
+    a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    .detail-body {
+      margin-top: 12px;
+      font-size: 14px;
+      color: var(--text-dim);
+    }
+
+    /* ===== 움직임 줄이기 (T01-C22) ===== */
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+    }
+
+    /* ===== 작은 화면 (T01-C10: 1366x768 대응) ===== */
+    @media (max-width: 720px) {
+      .grid { grid-template-columns: 1fr; }
+      body { padding: 16px 14px 40px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- ===== 헤더: 이름 + 한 줄 소개 ===== -->
+    <header>
+      <p class="eyebrow">About Me</p>
+      <h1>김민석입니다.</h1>
+      <p class="lede">
+        자료를 보고 분석하고, 여러 번 검증하고, 무언가를 오래 관찰하는 것을 좋아합니다.
+        이 페이지는 저를 처음 알게 된 분께 제가 무엇을 좋아하고 그것을 어떻게 해왔는지 보여드립니다.
+      </p>
+    </header>
+
+    <!-- ===== 좋아하는 일 3개 ===== -->
+    <section aria-labelledby="likes-title">
+      <h2 id="likes-title">제가 좋아하는 세 가지</h2>
+      <div class="grid">
+
+        <!-- ① 자료를 보고 분석하는 일 -->
+        <article class="card">
+          <h3>자료를 보고 분석하는 일</h3>
+          <dl>
+            <dt>상황</dt>
+            <dd>(카드 2에서 채웁니다)</dd>
+            <dt>행동</dt>
+            <dd>(카드 2에서 채웁니다)</dd>
+            <dt>결과</dt>
+            <dd>(카드 2에서 채웁니다)</dd>
+          </dl>
+        </article>
+
+        <!-- ② 여러 번 검증하는 일 -->
+        <article class="card">
+          <h3>여러 번 검증하는 일</h3>
+          <dl>
+            <dt>상황</dt>
+            <dd>(카드 2에서 채웁니다)</dd>
+            <dt>행동</dt>
+            <dd>(카드 2에서 채웁니다)</dd>
+            <dt>결과</dt>
+            <dd>(카드 2에서 채웁니다)</dd>
+          </dl>
+        </article>
+
+        <!-- ③ 무언가를 보거나 관찰하는 일 -->
+        <article class="card">
+          <h3>무언가를 보거나 관찰하는 일</h3>
+          <dl>
+            <dt>상황</dt>
+            <dd>(카드 2에서 채웁니다)</dd>
+            <dt>행동</dt>
+            <dd>(카드 2에서 채웁니다)</dd>
+            <dt>결과</dt>
+            <dd>(카드 2에서 채웁니다)</dd>
+          </dl>
+        </article>
+
+        <!-- 3개라 그리드 빈 칸 1개 → 취미 카드로 채움 -->
+        <article class="card">
+          <h3>쉬는 시간에는</h3>
+          <p class="hobby">🎮 게임</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===== 접이식 상세: 카드 5 상호작용 ===== -->
+    <section aria-labelledby="detail-title">
+      <h2 id="detail-title">더 자세히</h2>
+      <details>
+        <summary>이 페이지를 만들면서. (기술 상세)</summary>
+        <div class="detail-body">
+          <p>(카드 5에서 채웁니다 — 기술 스택, AI 활용 방식, AI에게 맡긴 일과 직접 판단한 일)</p>
+        </div>
+      </details>
+    </section>
+
+  </div>
+</body>
+</html>
