@@ -12,65 +12,59 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      /* 파스텔톤 팔레트 */
+      /* 파스텔톤 팔레트 (대비율 상향 조정) */
       --bg: #f7f5f0;
       --surface: #ffffff;
       --surface-soft: #eef4f8;
       --text: #2f2b28;
-      --text-dim: #5c5651;
-      --accent: #6b8fb5;
-      --accent-soft: #dbe7f1;
+      --text-dim: #4a4542;       /* 대비 강화: 5c5651 → 4a4542 */
+      --accent: #4a6d91;         /* 대비 강화: 6b8fb5 → 4a6d91 */
+      --accent-soft: #e1ebf2;    /* 배경 톤 유지 */
       --border: #e3ded6;
       --hobby-bg: #f3e8f4;
-      --hobby-text: #7a5a7e;
+      --hobby-text: #5d3f62;     /* 대비 강화: 7a5a7e → 5d3f62 */
     }
 
     body {
       font-family: system-ui, -apple-system, "Segoe UI", "Malgun Gothic", sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.5; /* 1.6 → 1.5 줄임 (세로 절약) */
-      padding: 16px 20px 32px; /* 상단 24→16, 하단 48→32 */
+      line-height: 1.5;
+      padding: 16px 20px 32px;
     }
 
-    /* ===== 본문 최대 폭: 가로 넘침 방지 (T01-C12) ===== */
-    .wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+    .wrap { max-width: 1100px; margin: 0 auto; }
 
-    /* ===== 헤더 ===== */
-    header { margin-bottom: 20px; } /* 32 → 20 */
+    header { margin-bottom: 20px; }
 
     .eyebrow {
-      font-size: 12px; /* 13 → 12 */
+      font-size: 12px;
       letter-spacing: 0.08em;
       color: var(--accent);
       text-transform: uppercase;
-      margin-bottom: 4px; /* 8 → 4 */
+      margin-bottom: 4px;
       font-weight: 700;
     }
 
     h1 {
-      font-size: clamp(26px, 4.5vw, 38px); /* 최대 44 → 38 */
+      font-size: clamp(26px, 4.5vw, 38px);
       line-height: 1.15;
-      margin-bottom: 8px; /* 12 → 8 */
+      margin-bottom: 8px;
       color: var(--text);
     }
 
     .lede {
-      font-size: 16px; /* 17 → 16 */
+      font-size: 16px;
       color: var(--text-dim);
       max-width: 640px;
     }
 
-    /* ===== 좋아하는 일 3개 (2단 그리드) ===== */
-    section { margin-bottom: 28px; } /* 40 → 28 */
+    section { margin-bottom: 28px; }
 
     h2 {
-      font-size: 18px; /* 20 → 18 */
-      margin-bottom: 12px; /* 16 → 12 */
-      padding-bottom: 6px; /* 8 → 6 */
+      font-size: 18px;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
       border-bottom: 1px solid var(--border);
       color: var(--text);
     }
@@ -78,57 +72,52 @@
     .grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px; /* 16 → 12 */
+      gap: 12px;
     }
 
-    /* 1366x768에서 세로가 짧으므로 카드 높이를 압축 */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 10px; /* 12 → 10 */
-      padding: 14px 16px; /* 20 → 14/16 */
+      border-radius: 10px;
+      padding: 14px 16px;
     }
 
     .card h3 {
-      font-size: 16px; /* 17 → 16 */
-      margin-bottom: 8px; /* 10 → 8 */
+      font-size: 16px;
+      margin-bottom: 8px;
       color: var(--accent);
     }
 
-    /* 상황·행동·결과 */
-    .card dl { font-size: 13px; } /* 14 → 13 */
+    .card dl { font-size: 13px; }
     .card dt {
       font-weight: 700;
       color: var(--text);
-      margin-top: 6px; /* 8 → 6 */
+      margin-top: 6px;
     }
     .card dt:first-child { margin-top: 0; }
     .card dd { color: var(--text-dim); margin-left: 0; }
 
-    /* ===== 근거 자리 표시 ===== */
     .evidence {
-      margin-top: 10px; /* 12 → 10 */
-      padding: 8px 10px; /* 10/12 → 8/10 */
+      margin-top: 10px;
+      padding: 8px 10px;
       background: var(--accent-soft);
       border-radius: 8px;
-      font-size: 12px; /* 13 → 12 */
+      font-size: 12px;
       color: var(--text-dim);
     }
     .evidence strong { color: var(--text); }
 
-    /* ===== 취미 ===== */
     .hobby {
       display: inline-block;
       background: var(--hobby-bg);
       border: 1px solid #e6d3e8;
       border-radius: 999px;
-      padding: 6px 14px; /* 8/16 → 6/14 */
-      font-size: 14px; /* 15 → 14 */
+      padding: 6px 14px;
+      font-size: 14px;
       color: var(--hobby-text);
       font-weight: 600;
     }
 
-    /* ===== 접이식 상세 (카드 5 상호작용) ===== */
     details {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -150,9 +139,7 @@
     }
     details[open] summary::before { content: "▾ "; }
 
-    /* 키보드 초점 표시 (T01-C14) */
-    summary:focus-visible,
-    a:focus-visible {
+    summary:focus-visible, a:focus-visible {
       outline: 2px solid var(--accent);
       outline-offset: 3px;
       border-radius: 4px;
@@ -164,12 +151,10 @@
       color: var(--text-dim);
     }
 
-    /* ===== 움직임 줄이기 (T01-C22) ===== */
     @media (prefers-reduced-motion: reduce) {
       * { transition: none !important; animation: none !important; }
     }
 
-    /* ===== 작은 화면 (T01-C10: 1366x768 대응) ===== */
     @media (max-width: 720px) {
       .grid { grid-template-columns: 1fr; }
       body { padding: 12px 14px 28px; }
@@ -178,90 +163,76 @@
 </head>
 <body>
   <div class="wrap">
+    <!-- ===== main 태그로 주요 콘텐츠 감싸기 (접근성 결함 수정) ===== -->
+    <main>
+      <header>
+        <p class="eyebrow">About Me</p>
+        <h1>김민석입니다.</h1>
+        <p class="lede">
+          자료를 보고 분석하고, 여러 번 검증하고, 무언가를 오래 관찰하는 것을 좋아합니다.
+          이 페이지는 저를 처음 알게 된 분께 제가 무엇을 좋아하고 그것을 어떻게 해왔는지 보여드립니다.
+        </p>
+      </header>
 
-    <!-- ===== 헤더: 이름 + 한 줄 소개 ===== -->
-    <header>
-      <p class="eyebrow">About Me</p>
-      <h1>김민석입니다.</h1>
-      <p class="lede">
-        자료를 보고 분석하고, 여러 번 검증하고, 무언가를 오래 관찰하는 것을 좋아합니다.
-        이 페이지는 저를 처음 알게 된 분께 제가 무엇을 좋아하고 그것을 어떻게 해왔는지 보여드립니다.
-      </p>
-    </header>
+      <section aria-labelledby="likes-title">
+        <h2 id="likes-title">제가 좋아하는 세 가지</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>자료를 보고 분석하는 일</h3>
+            <dl>
+              <dt>상황</dt>
+              <dd>Wireshark로 패킷을 분석하면서, 패킷 교환 유형이 TCP인지 UDP인지 구분해야 했습니다.</dd>
+              <dt>행동</dt>
+              <dd>패킷 상세 내용을 열어 TCP와 UDP의 헤더 구조·플래그 차이를 항목별로 비교했습니다.</dd>
+              <dt>결과</dt>
+              <dd>두 프로토콜의 차이를 정리해, 패킷만 보고도 교환 유형을 판별할 수 있게 되었습니다.</dd>
+            </dl>
+            <p class="evidence"><strong>근거:</strong> (스크린샷 확인 후 연결 예정)</p>
+          </article>
 
-    <!-- ===== 좋아하는 일 3개 ===== -->
-    <section aria-labelledby="likes-title">
-      <h2 id="likes-title">제가 좋아하는 세 가지</h2>
-      <div class="grid">
+          <article class="card">
+            <h3>여러 번 검증하는 일</h3>
+            <dl>
+              <dt>상황</dt>
+              <dd>OWASP Juice Shop에서 SQL 인젝션 취약점을 분석했는데, 그린본에 결과가 뜨지 않았습니다.</dd>
+              <dt>행동</dt>
+              <dd>사이트 구성 코드에 문제가 있는지 여러 번 검증하고, 취약점 분석을 다시 실행했습니다.</dd>
+              <dt>결과</dt>
+              <dd>예제 사이트 코드 자체에 문제가 있음을 확인하고, 새 예제로 교체해 SQL 인젝션 탐지 결과를 얻었습니다.</dd>
+            </dl>
+            <p class="evidence"><strong>근거:</strong> (스크린샷 확인 후 연결 예정)</p>
+          </article>
 
-        <!-- ① 자료를 보고 분석하는 일 -->
-        <article class="card">
-          <h3>자료를 보고 분석하는 일</h3>
-          <dl>
-            <dt>상황</dt>
-            <dd>Wireshark로 패킷을 분석하면서, 패킷 교환 유형이 TCP인지 UDP인지 구분해야 했습니다.</dd>
-            <dt>행동</dt>
-            <dd>패킷 상세 내용을 열어 TCP와 UDP의 헤더 구조·플래그 차이를 항목별로 비교했습니다.</dd>
-            <dt>결과</dt>
-            <dd>두 프로토콜의 차이를 정리해, 패킷만 보고도 교환 유형을 판별할 수 있게 되었습니다.</dd>
-          </dl>
-          <p class="evidence">
-            <strong>근거:</strong> (스크린샷 확인 후 연결 예정)
-          </p>
-        </article>
+          <article class="card">
+            <h3>무언가를 보거나 관찰하는 일</h3>
+            <dl>
+              <dt>상황</dt>
+              <dd>게임 메타가 어떻게 바뀌는지, 실력을 어떻게 올릴지 알고 싶었습니다.</dd>
+              <dt>행동</dt>
+              <dd>여러 사람의 유튜브 영상과 방송을 장기간 시청하며 게임 운영과 아이템 구매 방식을 관찰하고 학습했습니다.</dd>
+              <dt>결과</dt>
+              <dd>학습한 운영·구매 방식을 적용해, 완전 초보자 수준에서 실버~골드 랭크까지 올렸습니다.</dd>
+            </dl>
+            <p class="evidence"><strong>근거:</strong> (스크린샷 없음 — 문장으로만 제시)</p>
+          </article>
 
-        <!-- ② 여러 번 검증하는 일 -->
-        <article class="card">
-          <h3>여러 번 검증하는 일</h3>
-          <dl>
-            <dt>상황</dt>
-            <dd>OWASP Juice Shop에서 SQL 인젝션 취약점을 분석했는데, 그린본에 결과가 뜨지 않았습니다.</dd>
-            <dt>행동</dt>
-            <dd>사이트 구성 코드에 문제가 있는지 여러 번 검증하고, 취약점 분석을 다시 실행했습니다.</dd>
-            <dt>결과</dt>
-            <dd>예제 사이트 코드 자체에 문제가 있음을 확인하고, 새 예제로 교체해 SQL 인젝션 탐지 결과를 얻었습니다.</dd>
-          </dl>
-          <p class="evidence">
-            <strong>근거:</strong> (스크린샷 확인 후 연결 예정)
-          </p>
-        </article>
-
-        <!-- ③ 무언가를 보거나 관찰하는 일 -->
-        <article class="card">
-          <h3>무언가를 보거나 관찰하는 일</h3>
-          <dl>
-            <dt>상황</dt>
-            <dd>게임 메타가 어떻게 바뀌는지, 실력을 어떻게 올릴지 알고 싶었습니다.</dd>
-            <dt>행동</dt>
-            <dd>여러 사람의 유튜브 영상과 방송을 장기간 시청하며 게임 운영과 아이템 구매 방식을 관찰하고 학습했습니다.</dd>
-            <dt>결과</dt>
-            <dd>학습한 운영·구매 방식을 적용해, 완전 초보자 수준에서 실버~골드 랭크까지 올렸습니다.</dd>
-          </dl>
-          <p class="evidence">
-            <strong>근거:</strong> (스크린샷 없음 — 문장으로만 제시)
-          </p>
-        </article>
-
-        <!-- 3개라 그리드 빈 칸 1개 → 취미 카드로 채움 -->
-        <article class="card">
-          <h3>쉬는 시간에는</h3>
-          <p class="hobby">🎮 게임</p>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- ===== 접이식 상세: 카드 5 상호작용 ===== -->
-    <section aria-labelledby="detail-title">
-      <h2 id="detail-title">더 자세히</h2>
-      <details>
-        <summary>이 페이지를 만들면서 (기술 상세)</summary>
-        <div class="detail-body">
-          <p>(카드 5에서 채웁니다 — 기술 스택, AI 활용 방식, AI에게 맡긴 일과 직접 판단한 일)</p>
+          <article class="card">
+            <h3>쉬는 시간에는</h3>
+            <p class="hobby">🎮 게임</p>
+          </article>
         </div>
-      </details>
-    </section>
+      </section>
 
+      <section aria-labelledby="detail-title">
+        <h2 id="detail-title">더 자세히</h2>
+        <details>
+          <summary>이 페이지를 만들면서 (기술 상세)</summary>
+          <div class="detail-body">
+            <p>(카드 5에서 채웁니다 — 기술 스택, AI 활용 방식, AI에게 맡긴 일과 직접 판단한 일)</p>
+          </div>
+        </details>
+      </section>
+    </main>
   </div>
 </body>
 </html>
