@@ -11,24 +11,24 @@
 
     :root {
       /* 파스텔톤 팔레트 */
-      --bg: #f7f5f0;           /* 따뜻한 아이보리 */
-      --surface: #ffffff;      /* 카드 배경 */
-      --surface-soft: #eef4f8; /* 연한 하늘 */
-      --text: #2f2b28;         /* 진한 브라운 */
-      --text-dim: #5c5651;     /* 중간 브라운 (대비 4.5:1 이상) */
-      --accent: #6b8fb5;       /* 파스텔 블루 */
-      --accent-soft: #dbe7f1;  /* 연한 파스텔 블루 */
-      --border: #e3ded6;       /* 연한 베이지 경계 */
-      --hobby-bg: #f3e8f4;     /* 연한 라벤더 */
-      --hobby-text: #7a5a7e;   /* 라벤더 텍스트 */
+      --bg: #f7f5f0;
+      --surface: #ffffff;
+      --surface-soft: #eef4f8;
+      --text: #2f2b28;
+      --text-dim: #5c5651;
+      --accent: #6b8fb5;
+      --accent-soft: #dbe7f1;
+      --border: #e3ded6;
+      --hobby-bg: #f3e8f4;
+      --hobby-text: #7a5a7e;
     }
 
     body {
       font-family: system-ui, -apple-system, "Segoe UI", "Malgun Gothic", sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
-      padding: 24px 20px 48px;
+      line-height: 1.5; /* 1.6 → 1.5 줄임 (세로 절약) */
+      padding: 16px 20px 32px; /* 상단 24→16, 하단 48→32 */
     }
 
     /* ===== 본문 최대 폭: 가로 넘침 방지 (T01-C12) ===== */
@@ -38,37 +38,37 @@
     }
 
     /* ===== 헤더 ===== */
-    header { margin-bottom: 32px; }
+    header { margin-bottom: 20px; } /* 32 → 20 */
 
     .eyebrow {
-      font-size: 13px;
+      font-size: 12px; /* 13 → 12 */
       letter-spacing: 0.08em;
       color: var(--accent);
       text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 4px; /* 8 → 4 */
       font-weight: 700;
     }
 
     h1 {
-      font-size: clamp(28px, 5vw, 44px);
-      line-height: 1.2;
-      margin-bottom: 12px;
+      font-size: clamp(26px, 4.5vw, 38px); /* 최대 44 → 38 */
+      line-height: 1.15;
+      margin-bottom: 8px; /* 12 → 8 */
       color: var(--text);
     }
 
     .lede {
-      font-size: 17px;
+      font-size: 16px; /* 17 → 16 */
       color: var(--text-dim);
       max-width: 640px;
     }
 
     /* ===== 좋아하는 일 3개 (2단 그리드) ===== */
-    section { margin-bottom: 40px; }
+    section { margin-bottom: 28px; } /* 40 → 28 */
 
     h2 {
-      font-size: 20px;
-      margin-bottom: 16px;
-      padding-bottom: 8px;
+      font-size: 18px; /* 20 → 18 */
+      margin-bottom: 12px; /* 16 → 12 */
+      padding-bottom: 6px; /* 8 → 6 */
       border-bottom: 1px solid var(--border);
       color: var(--text);
     }
@@ -76,40 +76,40 @@
     .grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+      gap: 12px; /* 16 → 12 */
     }
 
     /* 1366x768에서 세로가 짧으므로 카드 높이를 압축 */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
+      border-radius: 10px; /* 12 → 10 */
+      padding: 14px 16px; /* 20 → 14/16 */
     }
 
     .card h3 {
-      font-size: 17px;
-      margin-bottom: 10px;
+      font-size: 16px; /* 17 → 16 */
+      margin-bottom: 8px; /* 10 → 8 */
       color: var(--accent);
     }
 
     /* 상황·행동·결과 */
-    .card dl { font-size: 14px; }
+    .card dl { font-size: 13px; } /* 14 → 13 */
     .card dt {
       font-weight: 700;
       color: var(--text);
-      margin-top: 8px;
+      margin-top: 6px; /* 8 → 6 */
     }
     .card dt:first-child { margin-top: 0; }
     .card dd { color: var(--text-dim); margin-left: 0; }
 
     /* ===== 근거 자리 표시 ===== */
     .evidence {
-      margin-top: 12px;
-      padding: 10px 12px;
+      margin-top: 10px; /* 12 → 10 */
+      padding: 8px 10px; /* 10/12 → 8/10 */
       background: var(--accent-soft);
       border-radius: 8px;
-      font-size: 13px;
+      font-size: 12px; /* 13 → 12 */
       color: var(--text-dim);
     }
     .evidence strong { color: var(--text); }
@@ -120,8 +120,8 @@
       background: var(--hobby-bg);
       border: 1px solid #e6d3e8;
       border-radius: 999px;
-      padding: 8px 16px;
-      font-size: 15px;
+      padding: 6px 14px; /* 8/16 → 6/14 */
+      font-size: 14px; /* 15 → 14 */
       color: var(--hobby-text);
       font-weight: 600;
     }
@@ -130,14 +130,14 @@
     details {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px 20px;
+      border-radius: 10px;
+      padding: 14px 16px;
     }
 
     summary {
       cursor: pointer;
       font-weight: 700;
-      font-size: 16px;
+      font-size: 15px;
       list-style: none;
       color: var(--text);
     }
@@ -157,8 +157,8 @@
     }
 
     .detail-body {
-      margin-top: 12px;
-      font-size: 14px;
+      margin-top: 10px;
+      font-size: 13px;
       color: var(--text-dim);
     }
 
@@ -170,7 +170,7 @@
     /* ===== 작은 화면 (T01-C10: 1366x768 대응) ===== */
     @media (max-width: 720px) {
       .grid { grid-template-columns: 1fr; }
-      body { padding: 16px 14px 40px; }
+      body { padding: 12px 14px 28px; }
     }
   </style>
 </head>
