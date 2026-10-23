@@ -11,13 +11,13 @@
 
     :root {
       /* 그린 계열 파스텔톤 팔레트 */
-      --bg: #f2f7f3;
+      --bg: #e3ede6;
       --surface: #ffffff;
       --text: #2a332c;
       --text-dim: #455a4a;
       --accent: #3d7a5c;
-      --accent-soft: #dfeee5;
-      --border: #d8e5db;
+      --accent-soft: #f4f8f5;
+      --border: #cddcd2;
       --hobby-bg: #e8f3ea;
       --hobby-text: #3d6b4d;
     }
@@ -91,10 +91,11 @@
     .card dt:first-child { margin-top: 0; }
     .card dd { color: var(--text-dim); margin-left: 0; }
 
-    /* 근거 토글 */
+    /* 근거 토글 — 배경과 유사한 톤으로 변경 */
     .evidence-toggle {
       margin-top: 10px;
       background: var(--accent-soft);
+      border: 1px solid var(--border);
       border-radius: 8px;
       padding: 8px 10px;
       font-size: 12px;
@@ -189,7 +190,7 @@
         <h2 id="likes-title">제가 좋아하는 세 가지</h2>
         <div class="grid">
 
-          <!-- ① 관찰 (근거 없음) -->
+          <!-- ① 관찰 -->
           <article class="card">
             <h3>무언가를 보거나 관찰하는 일</h3>
             <dl>
@@ -204,7 +205,7 @@
             </dl>
           </article>
 
-          <!-- ② 자료 분석 (Wireshark) — 근거 토글 -->
+          <!-- ② 자료 분석 -->
           <article class="card">
             <h3>자료를 보고 분석하는 일</h3>
             <dl>
@@ -223,7 +224,7 @@
             </details>
           </article>
 
-          <!-- ③ 여러 번 검증 (Juice Shop + ZAP) — 근거 토글 -->
+          <!-- ③ 여러 번 검증 -->
           <article class="card">
             <h3>여러 번 검증하는 일</h3>
             <dl>
