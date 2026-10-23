@@ -14,12 +14,12 @@
       --bg: #e3ede6;
       --surface: #ffffff;
       --text: #2a332c;
-      --text-dim: #3a4a3e;       /* 대비 강화 */
-      --accent: #2d5c44;         /* 대비 강화 */
+      --text-dim: #3a4a3e;
+      --accent: #2d5c44;
       --accent-soft: #f4f8f5;
       --border: #cddcd2;
       --hobby-bg: #e8f3ea;
-      --hobby-text: #2d5c44;     /* 대비 강화 */
+      --hobby-text: #2d5c44;
     }
 
     body {
@@ -91,7 +91,7 @@
     .card dt:first-child { margin-top: 0; }
     .card dd { color: var(--text-dim); margin-left: 0; }
 
-    /* 근거 토글 — 배경과 유사한 톤으로 변경 */
+    /* 근거 토글 */
     .evidence-toggle {
       margin-top: 10px;
       background: var(--accent-soft);
@@ -201,7 +201,7 @@
               <dt>결과</dt>
               <dd>그 방식을 직접 적용해, 첫 배치고사에서 실버 랭크를 받는 성장을 이루었습니다.</dd>
               <dt>회고</dt>
-              <dd>(나중에 직접 작성)</dd>
+              <dd>배치고사 이후 랭크 게임에서 남탓과 욕설이 심한 분위기를 겪으면서, 더 높은 랭크를 목표로 삼는 것에 회의감이 들었습니다. 그래서 관찰을 더 이어가지 못한 점이 아쉽습니다.</dd>
             </dl>
           </article>
 
@@ -216,7 +216,7 @@
               <dt>결과</dt>
               <dd>GET 방식에서 아이디·비밀번호가 URL 파라미터로 평문 노출됨을 직접 확인했습니다.</dd>
               <dt>회고</dt>
-              <dd>(나중에 직접 작성)</dd>
+              <dd>GET과 POST처럼 주로 사용하는 통신 방식 외에, PUT이나 HEAD 같은 다른 HTTP 메서드는 확인하고 분석해보지 못한 점이 아쉽습니다.</dd>
             </dl>
             <details class="evidence-toggle">
               <summary>근거 보기 (Wireshark 캡처 화면)</summary>
@@ -235,7 +235,7 @@
               <dt>결과</dt>
               <dd>예제 사이트 코드 자체에 문제가 있음을 확인하고, 새 예제로 교체해 SQL 인젝션 탐지 결과를 얻었습니다.</dd>
               <dt>회고</dt>
-              <dd>(나중에 직접 작성)</dd>
+              <dd>당시 그린본, ZAP, SonarQube 이외에 Burp Suite, Acunetix 같은 다른 취약점 분석 프로그램으로 취약점을 서로 비교 검증해보지 못한 게 아쉽습니다.</dd>
             </dl>
             <details class="evidence-toggle">
               <summary>근거 보기 (ZAP 탐지 화면)</summary>
