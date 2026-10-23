@@ -5,24 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>김민석 — 좋아하는 것을 파고드는 사람</title>
   <meta name="description" content="나를 처음 알게 된 사람에게 내가 무엇을 좋아하고 그것을 어떻게 해왔는지 보여주는 페이지입니다.">
-  <!-- 파비콘 404 에러 방지용 빈 아이콘 -->
   <link rel="icon" href="data:,">
   <style>
-    /* ===== 기본 설정 ===== */
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      /* 파스텔톤 팔레트 (대비율 상향 조정) */
       --bg: #f7f5f0;
       --surface: #ffffff;
-      --surface-soft: #eef4f8;
       --text: #2f2b28;
-      --text-dim: #4a4542;       /* 대비 강화: 5c5651 → 4a4542 */
-      --accent: #4a6d91;         /* 대비 강화: 6b8fb5 → 4a6d91 */
-      --accent-soft: #e1ebf2;    /* 배경 톤 유지 */
+      --text-dim: #4a4542;
+      --accent: #4a6d91;
+      --accent-soft: #e1ebf2;
       --border: #e3ded6;
       --hobby-bg: #f3e8f4;
-      --hobby-text: #5d3f62;     /* 대비 강화: 7a5a7e → 5d3f62 */
+      --hobby-text: #5d3f62;
     }
 
     body {
@@ -106,6 +102,13 @@
       color: var(--text-dim);
     }
     .evidence strong { color: var(--text); }
+    .evidence img {
+      display: block;
+      width: 100%;
+      margin-top: 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
 
     .hobby {
       display: inline-block;
@@ -163,7 +166,6 @@
 </head>
 <body>
   <div class="wrap">
-    <!-- ===== main 태그로 주요 콘텐츠 감싸기 (접근성 결함 수정) ===== -->
     <main>
       <header>
         <p class="eyebrow">About Me</p>
@@ -177,19 +179,45 @@
       <section aria-labelledby="likes-title">
         <h2 id="likes-title">제가 좋아하는 세 가지</h2>
         <div class="grid">
+
+          <!-- ① 무언가를 보거나 관찰하는 일 (맨 위로 이동) -->
+          <article class="card">
+            <h3>무언가를 보거나 관찰하는 일</h3>
+            <dl>
+              <dt>상황</dt>
+              <dd>중학생 때 친구들의 권유로 리그 오브 레전드를 시작했지만, 친구들과 실력 차이가 커서 어떻게 실력을 올려야 할지 막막했습니다.</dd>
+              <dt>행동</dt>
+              <dd>유튜브와 방송을 보며 상대에 따른 아이템 선택과 운영 방법을 관찰하고 배웠습니다.</dd>
+              <dt>결과</dt>
+              <dd>그 방식을 직접 적용해, 첫 배치고사에서 실버 랭크를 받는 성장을 이루었습니다.</dd>
+              <dt>회고</dt>
+              <dd>(나중에 직접 작성)</dd>
+            </dl>
+            <p class="evidence">
+              <strong>근거:</strong> (스크린샷 없음 — 문장으로만 제시)
+            </p>
+          </article>
+
+          <!-- ② 자료를 보고 분석하는 일 (Wireshark) -->
           <article class="card">
             <h3>자료를 보고 분석하는 일</h3>
             <dl>
               <dt>상황</dt>
-              <dd>Wireshark로 패킷을 분석하면서, 패킷 교환 유형이 TCP인지 UDP인지 구분해야 했습니다.</dd>
+              <dd>웹 요청이 실제로 어떻게 전송되는지 확인하기 위해 Wireshark로 패킷을 캡처했습니다.</dd>
               <dt>행동</dt>
-              <dd>패킷 상세 내용을 열어 TCP와 UDP의 헤더 구조·플래그 차이를 항목별로 비교했습니다.</dd>
+              <dd>로그인 요청을 캡처해 GET 요청의 패킷 상세 내용을 열어 확인했습니다.</dd>
               <dt>결과</dt>
-              <dd>두 프로토콜의 차이를 정리해, 패킷만 보고도 교환 유형을 판별할 수 있게 되었습니다.</dd>
+              <dd>GET 방식에서 아이디·비밀번호가 URL 파라미터로 평문 노출됨을 직접 확인했습니다.</dd>
+              <dt>회고</dt>
+              <dd>(나중에 직접 작성)</dd>
             </dl>
-            <p class="evidence"><strong>근거:</strong> (스크린샷 확인 후 연결 예정)</p>
+            <p class="evidence">
+              <strong>근거:</strong> Wireshark 패킷 캡처 화면
+              <img src="./images/wireshark-get.webp" alt="Wireshark에서 GET 요청의 아이디와 비밀번호가 평문으로 노출된 화면">
+            </p>
           </article>
 
+          <!-- ③ 여러 번 검증하는 일 (Juice Shop + ZAP) -->
           <article class="card">
             <h3>여러 번 검증하는 일</h3>
             <dl>
@@ -199,27 +227,24 @@
               <dd>사이트 구성 코드에 문제가 있는지 여러 번 검증하고, 취약점 분석을 다시 실행했습니다.</dd>
               <dt>결과</dt>
               <dd>예제 사이트 코드 자체에 문제가 있음을 확인하고, 새 예제로 교체해 SQL 인젝션 탐지 결과를 얻었습니다.</dd>
+              <dt>회고</dt>
+              <dd>(나중에 직접 작성)</dd>
             </dl>
-            <p class="evidence"><strong>근거:</strong> (스크린샷 확인 후 연결 예정)</p>
+            <p class="evidence">
+              <strong>근거:</strong> ZAP에서 SQL Injection 취약점이 탐지된 화면
+              <img src="./images/zap-alerts.webp" alt="OWASP ZAP에서 SQL Injection 취약점이 탐지된 화면">
+            </p>
           </article>
 
-          <article class="card">
-            <h3>무언가를 보거나 관찰하는 일</h3>
-            <dl>
-              <dt>상황</dt>
-              <dd>게임 메타가 어떻게 바뀌는지, 실력을 어떻게 올릴지 알고 싶었습니다.</dd>
-              <dt>행동</dt>
-              <dd>여러 사람의 유튜브 영상과 방송을 장기간 시청하며 게임 운영과 아이템 구매 방식을 관찰하고 학습했습니다.</dd>
-              <dt>결과</dt>
-              <dd>학습한 운영·구매 방식을 적용해, 완전 초보자 수준에서 실버~골드 랭크까지 올렸습니다.</dd>
-            </dl>
-            <p class="evidence"><strong>근거:</strong> (스크린샷 없음 — 문장으로만 제시)</p>
-          </article>
-
+          <!-- 취미 -->
           <article class="card">
             <h3>쉬는 시간에는</h3>
-            <p class="hobby">🎮 게임</p>
+            <p class="hobby">📖 소설 읽기</p>
+            <p style="margin-top: 8px; font-size: 13px; color: var(--text-dim);">
+              (인상 깊었던 책은 선정 중입니다.)
+            </p>
           </article>
+
         </div>
       </section>
 
@@ -229,7 +254,7 @@
           <summary>이 페이지를 만들면서 (기술 상세)</summary>
           <div class="detail-body">
             <p><strong>사용한 기술:</strong> HTML5, CSS3, Git, GitHub Pages</p>
-            <p style="margin-top: 8px;"><strong>AI 활용 방식:</strong> 구조 설계와 문장 다듬기는 AI의 도움을 받았지만, 대상 선정과 공개 범위는 제가 직접 판단했습니다. AI가 제안한 React 도입은 빌드 과정의 복잡성을 줄이기 위해 거절하고 순수 HTML로 구현했습니다.</p>
+            <p style="margin-top: 8px;"><strong>AI 활용 방식:</strong> 구조 설계와 문장 다듬기는 AI의 도움을 받았지만, 대상 선정과 공개 범위는 제가 직접 판단했습니다. AI가 제안한 React 도입은 빌드 과정의 복잡성을 줄이기 위해 수용하지 않고 순수 HTML로 구현했습니다.</p>
           </div>
         </details>
       </section>
