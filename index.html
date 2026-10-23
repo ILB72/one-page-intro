@@ -129,6 +129,20 @@
       font-weight: 600;
     }
 
+    /* 취미 본문 가독성 개선 */
+    .hobby-text {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+    .hobby-text p {
+      margin-bottom: 8px;
+    }
+    .hobby-text p:last-child {
+      margin-bottom: 0;
+    }
+
     details {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -241,13 +255,15 @@
             </details>
           </article>
 
-          <!-- 취미 -->
+          <!-- 취미 (가독성 개선) -->
           <article class="card">
             <h3>쉬는 시간에는</h3>
             <p class="hobby">📖 소설 읽기</p>
-            <p style="margin-top: 8px; font-size: 13px; color: var(--text-dim);">
-              가장 최근에 인상 깊게 읽은 책은 알베르 카뮈의 『이방인』입니다. 첫 문장인 "오늘 엄마가 죽었다. 아니, 어쩌면 어제. 모르겠다."가 특히 인상 깊고 오래 남았습니다. '인간은 왜 사회가 원하는 방식으로 슬퍼해야 하는가'라는 질문도 함께 생각하게 되었습니다.
-            </p>
+            <div class="hobby-text">
+              <p>가장 최근에 인상 깊게 읽은 책은 알베르 카뮈의 <strong>『이방인』</strong>입니다.</p>
+              <p>첫 문장인 "오늘 엄마가 죽었다. 아니, 어쩌면 어제. 모르겠다."가 특히 인상 깊고 오래 남았습니다.</p>
+              <p>'인간은 왜 사회가 원하는 방식으로 슬퍼해야 하는가'라는 질문도 함께 생각하게 되었습니다.</p>
+            </div>
           </article>
 
         </div>
