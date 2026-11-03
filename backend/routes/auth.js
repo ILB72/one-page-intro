@@ -11,7 +11,7 @@ const {
 
 const DB_PATH = path.join(__dirname, '../data/db.json');
 
-// DB 읽기/쓰기
+// DB 읽기/쓰기 (폴더 자동 생성 포함)
 function readDB() {
   const dir = path.dirname(DB_PATH);
   if (!fs.existsSync(dir)) {
@@ -41,16 +41,21 @@ router.post('/register/challenge', async (req, res) => {
   const db = readDB();
   const user = db.users.find(u => u.username === username);
 
+  // 이미 등록된 패스키의 id를 Uint8Array로 변환 (에러 해결 핵심)
+  const excludeCredentials = user
+    ? user.credentials.map(c => ({
+        id: Buffer.from(c.id, 'base64url'),
+        transports: c.transports || []
+      }))
+    : [];
+
   const options = await generateRegistrationOptions({
     rpName,
     rpID,
-    userID: username, // 간단히 username을 userID로
+    userID: username,
     userName: username,
     attestationType: 'none',
-    excludeCredentials: user ? user.credentials.map(c => ({
-      id: c.id,
-      transports: c.transports
-    })) : [],
+    excludeCredentials,
     authenticatorSelection: {
       residentKey: 'preferred',
       userVerification: 'preferred'
@@ -92,7 +97,6 @@ router.post('/register/verify', async (req, res) => {
 
     const { credentialPublicKey, credentialID, counter } = verification.registrationInfo;
 
-    // 사용자 찾기 또는 생성
     let user = db.users.find(u => u.username === username);
     if (!user) {
       user = { username, credentials: [] };
@@ -109,7 +113,6 @@ router.post('/register/verify', async (req, res) => {
       createdAt: new Date().toISOString()
     });
 
-    // challenge 삭제 (재사용 방지, C20)
     delete db.challenges[username];
     writeDB(db);
 
@@ -120,7 +123,7 @@ router.post('/register/verify', async (req, res) => {
   }
 });
 
-// ===== 로그인용 challenge (카드 3에서 사용) =====
+// ===== 로그인용 challenge (카드 3) =====
 router.post('/login/challenge', async (req, res) => {
   const { username } = req.body;
   const db = readDB();
@@ -130,8 +133,8 @@ router.post('/login/challenge', async (req, res) => {
   const options = await generateAuthenticationOptions({
     rpID,
     allowCredentials: user.credentials.map(c => ({
-      id: c.id,
-      transports: c.transports
+      id: Buffer.from(c.id, 'base64url'),
+      transports: c.transports || []
     })),
     userVerification: 'preferred'
   });
@@ -142,7 +145,7 @@ router.post('/login/challenge', async (req, res) => {
   res.json(options);
 });
 
-// ===== 로그인 검증 (카드 3에서 사용) =====
+// ===== 로그인 검증 (카드 3) =====
 router.post('/login/verify', async (req, res) => {
   const { username, credential } = req.body;
   const db = readDB();
