@@ -41,7 +41,6 @@ router.post('/register/challenge', async (req, res) => {
   const db = readDB();
   const user = db.users.find(u => u.username === username);
 
-  // 이미 등록된 패스키의 id를 Uint8Array로 변환 (에러 해결 핵심)
   const excludeCredentials = user
     ? user.credentials.map(c => ({
         id: new Uint8Array(Buffer.from(c.id, 'base64url')),
@@ -63,9 +62,9 @@ router.post('/register/challenge', async (req, res) => {
     }
   });
 
-  // challenge를 서버에 저장 (C19)
-  db.challenges[username] = options.challenge;
-  writeDB(db);
+  // ★ 파일 대신 세션에 challenge 저장
+  req.session.challenge = options.challenge;
+  req.session.username = username;
 
   res.json(options);
 });
@@ -77,10 +76,10 @@ router.post('/register/verify', async (req, res) => {
     return res.status(400).json({ error: 'username and credential required' });
   }
 
-  const db = readDB();
-  const expectedChallenge = db.challenges[username];
+  // ★ 세션에서 challenge 꺼내기
+  const expectedChallenge = req.session.challenge;
   if (!expectedChallenge) {
-    return res.status(400).json({ error: 'No challenge found. Request challenge first.' });
+    return res.status(400).json({ error: 'No challenge in session. Request challenge first.' });
   }
 
   try {
@@ -98,6 +97,7 @@ router.post('/register/verify', async (req, res) => {
 
     const { credentialPublicKey, credentialID, counter } = verification.registrationInfo;
 
+    const db = readDB();
     let user = db.users.find(u => u.username === username);
     if (!user) {
       user = { username, credentials: [] };
@@ -114,12 +114,16 @@ router.post('/register/verify', async (req, res) => {
       createdAt: new Date().toISOString()
     });
 
-    delete db.challenges[username];
     writeDB(db);
+
+    // ★ 사용한 challenge는 세션에서 삭제
+    delete req.session.challenge;
+    delete req.session.username;
 
     res.json({ verified: true, message: '패스키가 등록되었습니다.' });
   } catch (err) {
     console.error('Register verify error:', err);
+    delete req.session.challenge;
     res.status(400).json({ error: err.message });
   }
 });
@@ -141,8 +145,9 @@ router.post('/login/challenge', async (req, res) => {
     userVerification: 'preferred'
   });
 
-  db.challenges[username] = options.challenge;
-  writeDB(db);
+  // ★ 세션에 challenge 저장
+  req.session.challenge = options.challenge;
+  req.session.username = username;
 
   res.json(options);
 });
@@ -154,9 +159,10 @@ router.post('/login/verify', async (req, res) => {
   const user = db.users.find(u => u.username === username);
   if (!user) return res.status(404).json({ error: 'User not found' });
 
-  const expectedChallenge = db.challenges[username];
+  // ★ 세션에서 challenge 꺼내기
+  const expectedChallenge = req.session.challenge;
   if (!expectedChallenge) {
-    return res.status(400).json({ error: 'No challenge found' });
+    return res.status(400).json({ error: 'No challenge in session' });
   }
 
   const cred = user.credentials.find(c => c.id === credential.id);
@@ -181,13 +187,17 @@ router.post('/login/verify', async (req, res) => {
     }
 
     cred.counter = verification.authenticationInfo.newCounter;
-    delete db.challenges[username];
     writeDB(db);
+
+    // ★ 사용한 challenge는 세션에서 삭제
+    delete req.session.challenge;
+    delete req.session.username;
 
     req.session.userId = username;
     res.json({ verified: true, message: '로그인 성공' });
   } catch (err) {
     console.error('Login verify error:', err);
+    delete req.session.challenge;
     res.status(400).json({ error: err.message });
   }
 });
