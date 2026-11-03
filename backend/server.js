@@ -8,20 +8,9 @@ const privateRoutes = require('./routes/private');
 
 const app = express();
 
-// CORS: GitHub Pages 도메인 허용
-const allowedOrigins = [
-  'https://ilb72.github.io',
-  'http://localhost:3000'
-];
-
+// CORS: 모든 origin 허용 (디버그용)
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: true,
   credentials: true
 }));
 
