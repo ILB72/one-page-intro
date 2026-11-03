@@ -48,11 +48,7 @@
       margin-bottom: 6px;
     }
 
-    .lede {
-      font-size: 15px;
-      color: var(--text-dim);
-      max-width: 100%;
-    }
+    .lede { font-size: 15px; color: var(--text-dim); max-width: 100%; }
 
     .lede-box {
       background: var(--surface);
@@ -63,10 +59,7 @@
     }
     .lede-box .lede { margin: 0; }
 
-    .target {
-      font-weight: 700;
-      color: var(--accent);
-    }
+    .target { font-weight: 700; color: var(--accent); }
 
     section { margin-bottom: 20px; }
 
@@ -77,11 +70,7 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
 
     .card {
       background: var(--surface);
@@ -90,18 +79,10 @@
       padding: 10px 12px;
     }
 
-    .card h3 {
-      font-size: 15px;
-      margin-bottom: 6px;
-      color: var(--accent);
-    }
+    .card h3 { font-size: 15px; margin-bottom: 6px; color: var(--accent); }
 
     .card dl { font-size: 12.5px; }
-    .card dt {
-      font-weight: 700;
-      color: var(--text);
-      margin-top: 5px;
-    }
+    .card dt { font-weight: 700; color: var(--text); margin-top: 5px; }
     .card dt:first-child { margin-top: 0; }
     .card dd { color: var(--text-dim); margin-left: 0; }
 
@@ -113,25 +94,11 @@
       padding: 6px 10px;
       font-size: 12px;
     }
-    .evidence-toggle summary {
-      cursor: pointer;
-      font-weight: 700;
-      color: var(--text);
-      list-style: none;
-    }
+    .evidence-toggle summary { cursor: pointer; font-weight: 700; color: var(--text); list-style: none; }
     .evidence-toggle summary::-webkit-details-marker { display: none; }
-    .evidence-toggle summary::before {
-      content: "▸ ";
-      color: var(--accent);
-    }
+    .evidence-toggle summary::before { content: "▸ "; color: var(--accent); }
     .evidence-toggle[open] summary::before { content: "▾ "; }
-    .evidence-toggle img {
-      display: block;
-      width: 100%;
-      margin-top: 8px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-    }
+    .evidence-toggle img { display: block; width: 100%; margin-top: 8px; border-radius: 6px; border: 1px solid var(--border); }
 
     .hobby {
       display: inline-block;
@@ -144,61 +111,26 @@
       font-weight: 600;
     }
 
-    .hobby-text {
-      margin-top: 10px;
-      font-size: 12.5px;
-      color: var(--text-dim);
-      line-height: 1.65;
-    }
+    .hobby-text { margin-top: 10px; font-size: 12.5px; color: var(--text-dim); line-height: 1.65; }
     .hobby-text p { margin-bottom: 6px; }
     .hobby-text p:last-child { margin-bottom: 0; }
 
-    details {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 14px;
-    }
+    details { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
 
-    summary {
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 15px;
-      list-style: none;
-      color: var(--text);
-    }
+    summary { cursor: pointer; font-weight: 700; font-size: 15px; list-style: none; color: var(--text); }
     summary::-webkit-details-marker { display: none; }
-    details > summary::before {
-      content: "▸ ";
-      color: var(--accent);
-    }
+    details > summary::before { content: "▸ "; color: var(--accent); }
     details[open] > summary::before { content: "▾ "; }
 
-    summary:focus-visible, a:focus-visible, button:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 3px;
-      border-radius: 4px;
-    }
+    summary:focus-visible, a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
-    .detail-body {
-      margin-top: 8px;
-      font-size: 12.5px;
-      color: var(--text-dim);
-    }
+    .detail-body { margin-top: 8px; font-size: 12.5px; color: var(--text-dim); }
 
     /* ===== 비공개 영역 ===== */
-    .private-section {
-      background: var(--surface);
-      border: 1px dashed var(--accent);
-      border-radius: 10px;
-      padding: 14px;
-    }
-    .private-gate p {
-      font-size: 13px;
-      color: var(--text-dim);
-      margin-bottom: 10px;
-    }
-    .login-btn {
+    .private-section { background: var(--surface); border: 1px dashed var(--accent); border-radius: 10px; padding: 14px; }
+    .private-gate p { font-size: 13px; color: var(--text-dim); margin-bottom: 10px; }
+
+    .login-btn, .register-btn {
       background: var(--accent);
       color: #fff;
       border: none;
@@ -207,8 +139,10 @@
       font-size: 14px;
       font-weight: 700;
       cursor: pointer;
+      margin-right: 8px;
     }
-    .login-btn:hover { opacity: 0.9; }
+    .login-btn:hover, .register-btn:hover { opacity: 0.9; }
+
     .private-item {
       background: var(--accent-soft);
       border: 1px solid var(--border);
@@ -216,16 +150,8 @@
       padding: 10px 12px;
       margin-top: 8px;
     }
-    .private-item h3 {
-      font-size: 14px;
-      color: var(--accent);
-      margin-bottom: 4px;
-    }
-    .private-item p {
-      font-size: 12.5px;
-      color: var(--text-dim);
-      line-height: 1.6;
-    }
+    .private-item h3 { font-size: 14px; color: var(--accent); margin-bottom: 4px; }
+    .private-item p { font-size: 12.5px; color: var(--text-dim); line-height: 1.6; }
 
     @media (prefers-reduced-motion: reduce) {
       * { transition: none !important; animation: none !important; }
@@ -255,7 +181,6 @@
         <h2 id="likes-title">제가 좋아하는 세 가지</h2>
         <div class="grid">
 
-          <!-- ① 관찰 -->
           <article class="card">
             <h3>무언가를 보거나 관찰하는 일</h3>
             <dl>
@@ -270,7 +195,6 @@
             </dl>
           </article>
 
-          <!-- ② 자료 분석 -->
           <article class="card">
             <h3>자료를 보고 분석하는 일</h3>
             <dl>
@@ -289,7 +213,6 @@
             </details>
           </article>
 
-          <!-- ③ 여러 번 검증 -->
           <article class="card">
             <h3>여러 번 검증하는 일</h3>
             <dl>
@@ -308,7 +231,6 @@
             </details>
           </article>
 
-          <!-- 취미 -->
           <article class="card">
             <h3>쉬는 시간에는</h3>
             <p class="hobby">📖 소설 읽기</p>
@@ -327,7 +249,7 @@
         <details>
           <summary>이 페이지를 만들면서 (기술 상세)</summary>
           <div class="detail-body">
-            <p><strong>사용한 기술:</strong> HTML5, CSS3, Git, GitHub Pages</p>
+            <p><strong>사용한 기술:</strong> HTML5, CSS3, Git, GitHub Pages, Node.js, Render, WebAuthn</p>
             <p style="margin-top: 8px;"><strong>AI 활용 방식:</strong> 구조 설계와 문장 다듬기는 AI의 도움을 받았습니다. 다만 대상 선정과 공개 범위는 제가 직접 판단했습니다. 기술 스택은 React 사용 여부를 검토했으나, 빌드 과정과 콘솔 오류 위험을 줄이기 위해 AI의 제안을 받아들여 순수 HTML로 구현했습니다.</p>
           </div>
         </details>
@@ -340,8 +262,8 @@
           <div id="private-gate" class="private-gate">
             <p>이 공간은 패스키로 로그인해야 볼 수 있습니다.</p>
             <button id="login-btn" class="login-btn">패스키로 로그인</button>
+            <button id="register-btn" class="register-btn">패스키 등록</button>
           </div>
-          <!-- 로그인 후 표시될 비공개 콘텐츠 (HTML에 미리 넣지 않음, C18) -->
           <div id="private-content" style="display: none;"></div>
         </div>
       </section>
@@ -354,9 +276,7 @@
     // 비공개 자료 불러오기
     async function loadPrivate() {
       try {
-        const res = await fetch(`${BACKEND_URL}/api/private`, {
-          credentials: 'include'
-        });
+        const res = await fetch(`${BACKEND_URL}/api/private`, { credentials: 'include' });
         if (res.status === 401) {
           document.getElementById('private-gate').style.display = 'block';
           document.getElementById('private-content').style.display = 'none';
@@ -383,11 +303,10 @@
 
     // ===== 패스키 등록 =====
     async function registerPasskey() {
-      const username = prompt('사용자 이름을 입력하세요 :');
+      const username = prompt('등록할 사용자 이름 :');
       if (!username) return;
 
       try {
-        // 1. 등록용 challenge 요청
         const challengeRes = await fetch(`${BACKEND_URL}/api/register/challenge`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -400,11 +319,9 @@
         }
         const options = await challengeRes.json();
 
-        // 2. 브라우저에서 패스키 생성
         const credential = await SimpleWebAuthnBrowser.startRegistration(options);
 
-        // 3. 서버에 검증 요청
-        const credentialName = prompt('이 패스키의 이름을 입력하세요 :') || '내 패스키';
+        const credentialName = prompt('이 패스키의 이름 :') || '내 패스키';
         const verifyRes = await fetch(`${BACKEND_URL}/api/register/verify`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -413,9 +330,7 @@
         });
 
         const result = await verifyRes.json();
-        if (!verifyRes.ok) {
-          throw new Error(result.error || '등록 검증 실패');
-        }
+        if (!verifyRes.ok) throw new Error(result.error || '등록 검증 실패');
 
         alert('패스키가 등록되었습니다!');
         loadPrivate();
@@ -425,8 +340,46 @@
       }
     }
 
-    // 로그인 버튼 → 패스키 등록으로 연결
-    document.getElementById('login-btn').addEventListener('click', registerPasskey);
+    // ===== 패스키 로그인 =====
+    async function loginPasskey() {
+      const username = prompt('로그인할 사용자 이름 :');
+      if (!username) return;
+
+      try {
+        const challengeRes = await fetch(`${BACKEND_URL}/api/login/challenge`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ username })
+        });
+        if (!challengeRes.ok) {
+          const err = await challengeRes.json();
+          throw new Error(err.error || 'Challenge 요청 실패');
+        }
+        const options = await challengeRes.json();
+
+        const credential = await SimpleWebAuthnBrowser.startAuthentication(options);
+
+        const verifyRes = await fetch(`${BACKEND_URL}/api/login/verify`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ username, credential })
+        });
+
+        const result = await verifyRes.json();
+        if (!verifyRes.ok) throw new Error(result.error || '로그인 검증 실패');
+
+        alert('로그인 성공!');
+        loadPrivate();
+      } catch (err) {
+        console.error('로그인 오류:', err);
+        alert('패스키 로그인 실패: ' + err.message);
+      }
+    }
+
+    document.getElementById('login-btn').addEventListener('click', loginPasskey);
+    document.getElementById('register-btn').addEventListener('click', registerPasskey);
 
     loadPrivate();
   </script>
