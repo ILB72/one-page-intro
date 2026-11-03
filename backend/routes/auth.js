@@ -31,10 +31,7 @@ router.post('/register/challenge', async (req, res) => {
     .eq('username', username)
     .maybeSingle();
 
-  // ===== [카드 4 테스트용] excludeCredentials 임시 비움 =====
-  // T08 통과 후 아래 주석을 해제하고, 현재의 빈 배열 줄을 삭제하세요.
-  const excludeCredentials = [];
-  /*
+  // ★ 원래 코드 복구: 이미 등록된 패스키 제외
   let excludeCredentials = [];
   if (user) {
     const { data: creds } = await supabase
@@ -48,7 +45,6 @@ router.post('/register/challenge', async (req, res) => {
       transports: c.transports || []
     }));
   }
-  */
 
   const options = await generateRegistrationOptions({
     rpName,
@@ -161,7 +157,7 @@ router.post('/login/challenge', async (req, res) => {
     .select('credential_id, transports')
     .eq('user_id', user.id);
 
-  // ★ allowCredentials: transports 제거, Uint8Array로 변환
+  // ★ 원래 코드 복구: DB 패스키로 제한
   const options = await generateAuthenticationOptions({
     rpID,
     allowCredentials: (creds || []).map(c => ({
