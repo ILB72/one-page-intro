@@ -26,11 +26,11 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.5;
-      padding: 12px 20px 24px; /* 상하 패딩 축소 */
+      padding: 12px 20px 24px;
     }
 
     .wrap { max-width: 1100px; margin: 0 auto; }
-    header { margin-bottom: 12px; } /* 16px → 12px */
+    header { margin-bottom: 12px; }
 
     .eyebrow {
       font-size: 12px;
@@ -42,26 +42,24 @@
     }
 
     h1 {
-      font-size: clamp(24px, 4vw, 34px); /* 최대 38px → 34px */
+      font-size: clamp(24px, 4vw, 34px);
       line-height: 1.15;
-      margin-bottom: 6px; /* 8px → 6px */
+      margin-bottom: 6px;
     }
 
     .lede {
-      font-size: 15px; /* 15.5px → 15px */
+      font-size: 15px;
       color: var(--text-dim);
       max-width: 100%;
     }
 
-    /* 헤더 소개 박스 */
     .lede-box {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 10px 14px; /* 12px 16px → 10px 14px */
-      margin-top: 10px; /* 12px → 10px */
+      padding: 10px 14px;
+      margin-top: 10px;
     }
-
     .lede-box .lede { margin: 0; }
 
     .target {
@@ -69,49 +67,49 @@
       color: var(--accent);
     }
 
-    section { margin-bottom: 20px; } /* 24px → 20px */
+    section { margin-bottom: 20px; }
 
     h2 {
-      font-size: 17px; /* 18px → 17px */
-      margin-bottom: 8px; /* 10px → 8px */
-      padding-bottom: 5px; /* 6px → 5px */
+      font-size: 17px;
+      margin-bottom: 8px;
+      padding-bottom: 5px;
       border-bottom: 1px solid var(--border);
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 10px; /* 12px → 10px */
+      gap: 10px;
     }
 
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 10px 12px; /* 12px 14px → 10px 12px */
+      padding: 10px 12px;
     }
 
     .card h3 {
-      font-size: 15px; /* 16px → 15px */
-      margin-bottom: 6px; /* 8px → 6px */
+      font-size: 15px;
+      margin-bottom: 6px;
       color: var(--accent);
     }
 
-    .card dl { font-size: 12.5px; } /* 13px → 12.5px */
+    .card dl { font-size: 12.5px; }
     .card dt {
       font-weight: 700;
       color: var(--text);
-      margin-top: 5px; /* 6px → 5px */
+      margin-top: 5px;
     }
     .card dt:first-child { margin-top: 0; }
     .card dd { color: var(--text-dim); margin-left: 0; }
 
     .evidence-toggle {
-      margin-top: 8px; /* 10px → 8px */
+      margin-top: 8px;
       background: var(--accent-soft);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 6px 10px; /* 8px 10px → 6px 10px */
+      padding: 6px 10px;
       font-size: 12px;
     }
     .evidence-toggle summary {
@@ -139,26 +137,26 @@
       background: var(--hobby-bg);
       border: 1px solid #cfe4d4;
       border-radius: 999px;
-      padding: 5px 12px; /* 6px 14px → 5px 12px */
-      font-size: 13px; /* 14px → 13px */
+      padding: 5px 12px;
+      font-size: 13px;
       color: var(--hobby-text);
       font-weight: 600;
     }
 
     .hobby-text {
-      margin-top: 10px; /* 12px → 10px */
-      font-size: 12.5px; /* 13px → 12.5px */
+      margin-top: 10px;
+      font-size: 12.5px;
       color: var(--text-dim);
-      line-height: 1.65; /* 1.7 → 1.65 */
+      line-height: 1.65;
     }
-    .hobby-text p { margin-bottom: 6px; } /* 8px → 6px */
+    .hobby-text p { margin-bottom: 6px; }
     .hobby-text p:last-child { margin-bottom: 0; }
 
     details {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 12px 14px; /* 14px 16px → 12px 14px */
+      padding: 12px 14px;
     }
 
     summary {
@@ -175,16 +173,57 @@
     }
     details[open] > summary::before { content: "▾ "; }
 
-    summary:focus-visible, a:focus-visible {
+    summary:focus-visible, a:focus-visible, button:focus-visible {
       outline: 2px solid var(--accent);
       outline-offset: 3px;
       border-radius: 4px;
     }
 
     .detail-body {
-      margin-top: 8px; /* 10px → 8px */
-      font-size: 12.5px; /* 13px → 12.5px */
+      margin-top: 8px;
+      font-size: 12.5px;
       color: var(--text-dim);
+    }
+
+    /* ===== 비공개 영역 ===== */
+    .private-section {
+      background: var(--surface);
+      border: 1px dashed var(--accent);
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .private-gate p {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+    }
+    .login-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 9px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .login-btn:hover { opacity: 0.9; }
+    .private-item {
+      background: var(--accent-soft);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-top: 8px;
+    }
+    .private-item h3 {
+      font-size: 14px;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .private-item p {
+      font-size: 12.5px;
+      color: var(--text-dim);
+      line-height: 1.6;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -292,7 +331,59 @@
           </div>
         </details>
       </section>
+
+      <!-- 🔒 비공개 영역 -->
+      <section aria-labelledby="private-title">
+        <h2 id="private-title">🔒 나만의 공간</h2>
+        <div class="private-section">
+          <div id="private-gate" class="private-gate">
+            <p>이 공간은 패스키로 로그인해야 볼 수 있습니다.</p>
+            <button id="login-btn" class="login-btn">패스키로 로그인</button>
+          </div>
+          <!-- 로그인 후 표시될 비공개 콘텐츠 (HTML에 미리 넣지 않음, C18) -->
+          <div id="private-content" style="display: none;"></div>
+        </div>
+      </section>
     </main>
   </div>
+
+  <script>
+    const BACKEND_URL = 'https://passkey-backend-m84p.onrender.com';
+
+    async function loadPrivate() {
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/private`, {
+          credentials: 'include'
+        });
+        if (res.status === 401) {
+          document.getElementById('private-gate').style.display = 'block';
+          document.getElementById('private-content').style.display = 'none';
+          return;
+        }
+        const data = await res.json();
+        renderPrivate(data.items);
+      } catch (e) {
+        console.error('비공개 자료 로드 실패:', e);
+      }
+    }
+
+    function renderPrivate(items) {
+      const container = document.getElementById('private-content');
+      container.innerHTML = items.map(item => `
+        <div class="private-item">
+          <h3>${item.title}</h3>
+          <p>${item.content}</p>
+        </div>
+      `).join('');
+      document.getElementById('private-gate').style.display = 'none';
+      document.getElementById('private-content').style.display = 'block';
+    }
+
+    document.getElementById('login-btn').addEventListener('click', () => {
+      alert('패스키 로그인은 카드 2~3에서 구현됩니다.');
+    });
+
+    loadPrivate();
+  </script>
 </body>
 </html>
