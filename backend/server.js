@@ -8,6 +8,9 @@ const privateRoutes = require('./routes/private');
 
 const app = express();
 
+// ★ Render 프록시 신뢰 (세션 쿠키 전송을 위해 필수)
+app.set('trust proxy', 1);
+
 // CORS: 모든 origin 허용 (디버그용)
 app.use(cors({
   origin: true,
@@ -20,9 +23,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-    maxAge: 1000 * 60 * 60 * 24 // 24시간
+    secure: true,           // Render는 HTTPS
+    sameSite: 'none',       // 크로스 사이트 쿠키 허용 (GitHub Pages ↔ Render)
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24
   }
 }));
 
