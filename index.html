@@ -348,6 +348,10 @@
 
         const credential = await SimpleWebAuthnBrowser.startAuthentication(options);
 
+        // ★ 디버그: credential.id / rawId 확인
+        console.log('credential.id:', credential.id);
+        console.log('credential.rawId:', credential.rawId);
+
         const verifyRes = await fetch(`${BACKEND_URL}/api/login/verify`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
