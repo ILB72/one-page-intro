@@ -33,95 +33,47 @@
     .wrap { max-width: 1100px; margin: 0 auto; }
     header { margin-bottom: 12px; }
 
-    .eyebrow {
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      text-transform: uppercase;
-      margin-bottom: 4px;
-      font-weight: 700;
-    }
+    .eyebrow { font-size: 12px; letter-spacing: 0.08em; color: var(--accent); text-transform: uppercase; margin-bottom: 4px; font-weight: 700; }
 
-    h1 {
-      font-size: clamp(24px, 4vw, 34px);
-      line-height: 1.15;
-      margin-bottom: 6px;
-    }
+    h1 { font-size: clamp(24px, 4vw, 34px); line-height: 1.15; margin-bottom: 6px; }
 
     .lede { font-size: 15px; color: var(--text-dim); max-width: 100%; }
 
-    .lede-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px 14px;
-      margin-top: 10px;
-    }
+    .lede-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; margin-top: 10px; }
     .lede-box .lede { margin: 0; }
-
     .target { font-weight: 700; color: var(--accent); }
 
     section { margin-bottom: 20px; }
 
-    h2 {
-      font-size: 17px;
-      margin-bottom: 8px;
-      padding-bottom: 5px;
-      border-bottom: 1px solid var(--border);
-    }
+    h2 { font-size: 17px; margin-bottom: 8px; padding-bottom: 5px; border-bottom: 1px solid var(--border); }
 
     .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
 
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px 12px;
-    }
-
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; }
     .card h3 { font-size: 15px; margin-bottom: 6px; color: var(--accent); }
-
     .card dl { font-size: 12.5px; }
     .card dt { font-weight: 700; color: var(--text); margin-top: 5px; }
     .card dt:first-child { margin-top: 0; }
     .card dd { color: var(--text-dim); margin-left: 0; }
 
-    .evidence-toggle {
-      margin-top: 8px;
-      background: var(--accent-soft);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 6px 10px;
-      font-size: 12px;
-    }
+    .evidence-toggle { margin-top: 8px; background: var(--accent-soft); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font-size: 12px; }
     .evidence-toggle summary { cursor: pointer; font-weight: 700; color: var(--text); list-style: none; }
     .evidence-toggle summary::-webkit-details-marker { display: none; }
     .evidence-toggle summary::before { content: "▸ "; color: var(--accent); }
     .evidence-toggle[open] summary::before { content: "▾ "; }
     .evidence-toggle img { display: block; width: 100%; margin-top: 8px; border-radius: 6px; border: 1px solid var(--border); }
 
-    .hobby {
-      display: inline-block;
-      background: var(--hobby-bg);
-      border: 1px solid #cfe4d4;
-      border-radius: 999px;
-      padding: 5px 12px;
-      font-size: 13px;
-      color: var(--hobby-text);
-      font-weight: 600;
-    }
+    .hobby { display: inline-block; background: var(--hobby-bg); border: 1px solid #cfe4d4; border-radius: 999px; padding: 5px 12px; font-size: 13px; color: var(--hobby-text); font-weight: 600; }
 
     .hobby-text { margin-top: 10px; font-size: 12.5px; color: var(--text-dim); line-height: 1.65; }
     .hobby-text p { margin-bottom: 6px; }
     .hobby-text p:last-child { margin-bottom: 0; }
 
     details { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
-
     summary { cursor: pointer; font-weight: 700; font-size: 15px; list-style: none; color: var(--text); }
     summary::-webkit-details-marker { display: none; }
     details > summary::before { content: "▸ "; color: var(--accent); }
     details[open] > summary::before { content: "▾ "; }
-
     summary:focus-visible, a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
     .detail-body { margin-top: 8px; font-size: 12.5px; color: var(--text-dim); }
@@ -130,37 +82,43 @@
     .private-section { background: var(--surface); border: 1px dashed var(--accent); border-radius: 10px; padding: 14px; }
     .private-gate p { font-size: 13px; color: var(--text-dim); margin-bottom: 10px; }
 
-    .login-btn, .register-btn {
+    .login-btn, .register-btn, .logout-btn, .delete-btn {
       background: var(--accent);
       color: #fff;
       border: none;
       border-radius: 8px;
-      padding: 9px 16px;
-      font-size: 14px;
+      padding: 8px 14px;
+      font-size: 13px;
       font-weight: 700;
       cursor: pointer;
-      margin-right: 8px;
+      margin-right: 6px;
+      margin-bottom: 6px;
     }
-    .login-btn:hover, .register-btn:hover { opacity: 0.9; }
+    .logout-btn { background: #7a5a5a; }
+    .delete-btn { background: #a54a4a; font-size: 12px; padding: 5px 10px; }
+    .login-btn:hover, .register-btn:hover, .logout-btn:hover, .delete-btn:hover { opacity: 0.9; }
 
-    .private-item {
-      background: var(--accent-soft);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 10px 12px;
-      margin-top: 8px;
-    }
+    .private-item { background: var(--accent-soft); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; margin-top: 8px; }
     .private-item h3 { font-size: 14px; color: var(--accent); margin-bottom: 4px; }
     .private-item p { font-size: 12.5px; color: var(--text-dim); line-height: 1.6; }
 
-    @media (prefers-reduced-motion: reduce) {
-      * { transition: none !important; animation: none !important; }
+    .cred-list { margin-top: 12px; }
+    .cred-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--accent-soft);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin-bottom: 6px;
+      font-size: 12.5px;
     }
+    .cred-row .cred-info { color: var(--text-dim); }
+    .cred-row .cred-info strong { color: var(--text); }
 
-    @media (max-width: 720px) {
-      .grid { grid-template-columns: 1fr; }
-      body { padding: 10px 14px 24px; }
-    }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+    @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } body { padding: 10px 14px 24px; } }
   </style>
 </head>
 <body>
@@ -180,32 +138,23 @@
       <section aria-labelledby="likes-title">
         <h2 id="likes-title">제가 좋아하는 세 가지</h2>
         <div class="grid">
-
           <article class="card">
             <h3>무언가를 보거나 관찰하는 일</h3>
             <dl>
-              <dt>상황</dt>
-              <dd>중학생 때 친구들의 권유로 리그 오브 레전드를 시작했지만, 친구들과 실력 차이가 커서 어떻게 실력을 올려야 할지 막막했습니다.</dd>
-              <dt>행동</dt>
-              <dd>유튜브와 방송을 보며 상대에 따른 아이템 선택과 운영 방법을 관찰하고 배웠습니다.</dd>
-              <dt>결과</dt>
-              <dd>그 방식을 직접 적용해, 첫 배치고사에서 실버 랭크를 받는 성장을 이루었습니다.</dd>
-              <dt>회고</dt>
-              <dd>배치고사 이후 랭크 게임에서 남탓과 욕설이 심한 분위기를 겪으면서, 더 높은 랭크를 목표로 삼는 것에 회의감이 들었습니다. 그래서 관찰을 더 이어가지 못한 점이 아쉽습니다.</dd>
+              <dt>상황</dt><dd>중학생 때 친구들의 권유로 리그 오브 레전드를 시작했지만, 친구들과 실력 차이가 커서 어떻게 실력을 올려야 할지 막막했습니다.</dd>
+              <dt>행동</dt><dd>유튜브와 방송을 보며 상대에 따른 아이템 선택과 운영 방법을 관찰하고 배웠습니다.</dd>
+              <dt>결과</dt><dd>그 방식을 직접 적용해, 첫 배치고사에서 실버 랭크를 받는 성장을 이루었습니다.</dd>
+              <dt>회고</dt><dd>배치고사 이후 랭크 게임에서 남탓과 욕설이 심한 분위기를 겪으면서, 더 높은 랭크를 목표로 삼는 것에 회의감이 들었습니다. 그래서 관찰을 더 이어가지 못한 점이 아쉽습니다.</dd>
             </dl>
           </article>
 
           <article class="card">
             <h3>자료를 보고 분석하는 일</h3>
             <dl>
-              <dt>상황</dt>
-              <dd>웹 요청이 실제로 어떻게 전송되는지 확인하기 위해 Wireshark로 패킷을 캡처했습니다.</dd>
-              <dt>행동</dt>
-              <dd>로그인 요청을 캡처해 GET 요청의 패킷 상세 내용을 열어 확인했습니다.</dd>
-              <dt>결과</dt>
-              <dd>GET 방식에서 아이디·비밀번호가 URL 파라미터로 평문 노출됨을 직접 확인했습니다.</dd>
-              <dt>회고</dt>
-              <dd>GET과 POST처럼 주로 사용하는 통신 방식 외에, PUT이나 HEAD 같은 다른 HTTP 메서드는 확인하고 분석해보지 못한 점이 아쉽습니다.</dd>
+              <dt>상황</dt><dd>웹 요청이 실제로 어떻게 전송되는지 확인하기 위해 Wireshark로 패킷을 캡처했습니다.</dd>
+              <dt>행동</dt><dd>로그인 요청을 캡처해 GET 요청의 패킷 상세 내용을 열어 확인했습니다.</dd>
+              <dt>결과</dt><dd>GET 방식에서 아이디·비밀번호가 URL 파라미터로 평문 노출됨을 직접 확인했습니다.</dd>
+              <dt>회고</dt><dd>GET과 POST처럼 주로 사용하는 통신 방식 외에, PUT이나 HEAD 같은 다른 HTTP 메서드는 확인하고 분석해보지 못한 점이 아쉽습니다.</dd>
             </dl>
             <details class="evidence-toggle">
               <summary>근거 보기 (Wireshark 캡처 화면)</summary>
@@ -216,14 +165,10 @@
           <article class="card">
             <h3>여러 번 검증하는 일</h3>
             <dl>
-              <dt>상황</dt>
-              <dd>OWASP Juice Shop에서 SQL 인젝션 취약점을 분석했는데, 그린본에 결과가 뜨지 않았습니다.</dd>
-              <dt>행동</dt>
-              <dd>사이트 구성 코드에 문제가 있는지 여러 번 검증하고, 취약점 분석을 다시 실행했습니다.</dd>
-              <dt>결과</dt>
-              <dd>예제 사이트 코드 자체에 문제가 있음을 확인하고, 새 예제로 교체해 SQL 인젝션 탐지 결과를 얻었습니다.</dd>
-              <dt>회고</dt>
-              <dd>당시 그린본, ZAP, SonarQube 이외에 Burp Suite, Acunetix 같은 다른 취약점 분석 프로그램으로 취약점을 서로 비교 검증해보지 못한 게 아쉽습니다.</dd>
+              <dt>상황</dt><dd>OWASP Juice Shop에서 SQL 인젝션 취약점을 분석했는데, 그린본에 결과가 뜨지 않았습니다.</dd>
+              <dt>행동</dt><dd>사이트 구성 코드에 문제가 있는지 여러 번 검증하고, 취약점 분석을 다시 실행했습니다.</dd>
+              <dt>결과</dt><dd>예제 사이트 코드 자체에 문제가 있음을 확인하고, 새 예제로 교체해 SQL 인젝션 탐지 결과를 얻었습니다.</dd>
+              <dt>회고</dt><dd>당시 그린본, ZAP, SonarQube 이외에 Burp Suite, Acunetix 같은 다른 취약점 분석 프로그램으로 취약점을 서로 비교 검증해보지 못한 게 아쉽습니다.</dd>
             </dl>
             <details class="evidence-toggle">
               <summary>근거 보기 (ZAP 탐지 화면)</summary>
@@ -240,7 +185,6 @@
               <p>'인간은 왜 사회가 원하는 방식으로 슬퍼해야 하는가'라는 질문도 함께 생각하게 되었습니다.</p>
             </div>
           </article>
-
         </div>
       </section>
 
@@ -249,13 +193,12 @@
         <details>
           <summary>이 페이지를 만들면서 (기술 상세)</summary>
           <div class="detail-body">
-            <p><strong>사용한 기술:</strong> HTML5, CSS3, Git, GitHub Pages, Node.js, Render, WebAuthn</p>
+            <p><strong>사용한 기술:</strong> HTML5, CSS3, Git, GitHub Pages, Node.js, Render, Supabase, WebAuthn</p>
             <p style="margin-top: 8px;"><strong>AI 활용 방식:</strong> 구조 설계와 문장 다듬기는 AI의 도움을 받았습니다. 다만 대상 선정과 공개 범위는 제가 직접 판단했습니다. 기술 스택은 React 사용 여부를 검토했으나, 빌드 과정과 콘솔 오류 위험을 줄이기 위해 AI의 제안을 받아들여 순수 HTML로 구현했습니다.</p>
           </div>
         </details>
       </section>
 
-      <!-- 🔒 비공개 영역 -->
       <section aria-labelledby="private-title">
         <h2 id="private-title">🔒 나만의 공간</h2>
         <div class="private-section">
@@ -273,7 +216,6 @@
   <script>
     const BACKEND_URL = 'https://passkey-backend-m84p.onrender.com';
 
-    // 비공개 자료 불러오기
     async function loadPrivate() {
       try {
         const res = await fetch(`${BACKEND_URL}/api/private`, { credentials: 'include' });
@@ -284,6 +226,7 @@
         }
         const data = await res.json();
         renderPrivate(data.items);
+        loadCredentials();
       } catch (e) {
         console.error('비공개 자료 로드 실패:', e);
       }
@@ -296,12 +239,58 @@
           <h3>${item.title}</h3>
           <p>${item.content}</p>
         </div>
-      `).join('');
+      `).join('') + `
+        <div style="margin-top: 14px;">
+          <button id="logout-btn" class="logout-btn">로그아웃</button>
+          <button id="register-btn2" class="register-btn">패스키 추가 등록</button>
+        </div>
+        <div id="cred-list" class="cred-list"></div>
+      `;
       document.getElementById('private-gate').style.display = 'none';
       document.getElementById('private-content').style.display = 'block';
+
+      document.getElementById('logout-btn').addEventListener('click', logout);
+      document.getElementById('register-btn2').addEventListener('click', registerPasskey);
     }
 
-    // ===== 패스키 등록 =====
+    async function loadCredentials() {
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/credentials`, { credentials: 'include' });
+        if (!res.ok) return;
+        const data = await res.json();
+        const list = document.getElementById('cred-list');
+        if (!list) return;
+        list.innerHTML = '<h3 style="font-size:13px; margin-bottom:6px;">등록된 패스키</h3>' +
+          data.credentials.map(c => `
+            <div class="cred-row">
+              <span class="cred-info"><strong>${c.name}</strong> · ${new Date(c.created_at).toLocaleDateString('ko-KR')}</span>
+              <button class="delete-btn" data-id="${c.id}">삭제</button>
+            </div>
+          `).join('');
+        list.querySelectorAll('.delete-btn').forEach(btn => {
+          btn.addEventListener('click', () => deleteCredential(btn.dataset.id));
+        });
+      } catch (e) {
+        console.error('패스키 목록 로드 실패:', e);
+      }
+    }
+
+    async function deleteCredential(id) {
+      if (!confirm('이 패스키를 삭제하시겠습니까?')) return;
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/credentials/${id}`, {
+          method: 'DELETE',
+          credentials: 'include'
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || '삭제 실패');
+        alert('패스키가 삭제되었습니다.');
+        loadCredentials();
+      } catch (e) {
+        alert('삭제 실패: ' + e.message);
+      }
+    }
+
     async function registerPasskey() {
       const username = prompt('등록할 사용자 이름 :');
       if (!username) return;
@@ -340,7 +329,6 @@
       }
     }
 
-    // ===== 패스키 로그인 =====
     async function loginPasskey() {
       const username = prompt('로그인할 사용자 이름 :');
       if (!username) return;
@@ -375,6 +363,15 @@
       } catch (err) {
         console.error('로그인 오류:', err);
         alert('패스키 로그인 실패: ' + err.message);
+      }
+    }
+
+    async function logout() {
+      try {
+        await fetch(`${BACKEND_URL}/api/logout`, { method: 'POST', credentials: 'include' });
+        location.reload();
+      } catch (e) {
+        console.error('로그아웃 실패:', e);
       }
     }
 
