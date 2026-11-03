@@ -6,6 +6,7 @@
   <title>김민석 — 좋아하는 것을 파고드는 사람</title>
   <meta name="description" content="나를 처음 알게 된 사람에게 내가 무엇을 좋아하고 그것을 어떻게 해왔는지 보여주는 페이지입니다.">
   <link rel="icon" href="data:,">
+  <script src="https://unpkg.com/@simplewebauthn/browser@9.0.0/dist/bundle/index.umd.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -350,6 +351,7 @@
   <script>
     const BACKEND_URL = 'https://passkey-backend-m84p.onrender.com';
 
+    // 비공개 자료 불러오기
     async function loadPrivate() {
       try {
         const res = await fetch(`${BACKEND_URL}/api/private`, {
@@ -379,9 +381,52 @@
       document.getElementById('private-content').style.display = 'block';
     }
 
-    document.getElementById('login-btn').addEventListener('click', () => {
-      alert('패스키 로그인은 카드 2~3에서 구현됩니다.');
-    });
+    // ===== 패스키 등록 =====
+    async function registerPasskey() {
+      const username = prompt('사용자 이름을 입력하세요 (예: kms):');
+      if (!username) return;
+
+      try {
+        // 1. 등록용 challenge 요청
+        const challengeRes = await fetch(`${BACKEND_URL}/api/register/challenge`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ username })
+        });
+        if (!challengeRes.ok) {
+          const err = await challengeRes.json();
+          throw new Error(err.error || 'Challenge 요청 실패');
+        }
+        const options = await challengeRes.json();
+
+        // 2. 브라우저에서 패스키 생성
+        const credential = await SimpleWebAuthnBrowser.startRegistration(options);
+
+        // 3. 서버에 검증 요청
+        const credentialName = prompt('이 패스키의 이름을 입력하세요 (예: 내 노트북):') || '내 패스키';
+        const verifyRes = await fetch(`${BACKEND_URL}/api/register/verify`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ username, credential, credentialName })
+        });
+
+        const result = await verifyRes.json();
+        if (!verifyRes.ok) {
+          throw new Error(result.error || '등록 검증 실패');
+        }
+
+        alert('패스키가 등록되었습니다!');
+        loadPrivate();
+      } catch (err) {
+        console.error('등록 오류:', err);
+        alert('패스키 등록 실패: ' + err.message);
+      }
+    }
+
+    // 로그인 버튼 → 패스키 등록으로 연결
+    document.getElementById('login-btn').addEventListener('click', registerPasskey);
 
     loadPrivate();
   </script>
