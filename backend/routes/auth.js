@@ -13,6 +13,11 @@ const DB_PATH = path.join(__dirname, '../data/db.json');
 
 // DB 읽기/쓰기
 function readDB() {
+  if (!fs.existsSync(DB_PATH)) {
+    const initial = { users: [], challenges: {} };
+    fs.writeFileSync(DB_PATH, JSON.stringify(initial, null, 2));
+    return initial;
+  }
   return JSON.parse(fs.readFileSync(DB_PATH, 'utf-8'));
 }
 function writeDB(data) {
