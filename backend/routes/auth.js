@@ -31,9 +31,10 @@ router.post('/register/challenge', async (req, res) => {
     .eq('username', username)
     .maybeSingle();
 
-  // 기존 패스키 조회 (excludeCredentials용)
+  // ===== [카드 4 테스트용] excludeCredentials 임시 비움 =====
+  // T08 통과 후 아래 주석을 해제하고, 현재의 빈 배열 줄을 삭제하세요.
   const excludeCredentials = [];
-/*
+  /*
   let excludeCredentials = [];
   if (user) {
     const { data: creds } = await supabase
@@ -47,7 +48,8 @@ router.post('/register/challenge', async (req, res) => {
       transports: c.transports || []
     }));
   }
-*/
+  */
+
   const options = await generateRegistrationOptions({
     rpName,
     rpID,
@@ -159,12 +161,14 @@ router.post('/login/challenge', async (req, res) => {
     .select('credential_id, transports')
     .eq('user_id', user.id);
 
-    const options = await generateAuthenticationOptions({
-  rpID,
-  allowCredentials: [],
-  userVerification: 'preferred'
-});
-/*
+  // ===== [카드 4 테스트용] allowCredentials 임시 비움 =====
+  // T08 통과 후 아래 주석을 해제하고, 현재의 빈 배열 줄을 삭제하세요.
+  const options = await generateAuthenticationOptions({
+    rpID,
+    allowCredentials: [],
+    userVerification: 'preferred'
+  });
+  /*
   const options = await generateAuthenticationOptions({
     rpID,
     allowCredentials: (creds || []).map(c => ({
@@ -174,7 +178,8 @@ router.post('/login/challenge', async (req, res) => {
     })),
     userVerification: 'preferred'
   });
-*/
+  */
+
   await supabase.from('challenges').delete().eq('username', username);
   await supabase.from('challenges').insert({
     username,
@@ -208,11 +213,16 @@ router.post('/login/verify', async (req, res) => {
     return res.status(400).json({ error: 'No challenge found' });
   }
 
+  // credential.id 형식 대응 (문자열이면 그대로, 아니면 rawId → base64url)
+  const credId = typeof credential.id === 'string'
+    ? credential.id
+    : Buffer.from(credential.rawId).toString('base64url');
+
   const { data: cred } = await supabase
     .from('credentials')
     .select('*')
     .eq('user_id', user.id)
-    .eq('credential_id', credential.id)
+    .eq('credential_id', credId)
     .maybeSingle();
 
   if (!cred) return res.status(400).json({ error: 'Credential not found' });
