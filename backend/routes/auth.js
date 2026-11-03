@@ -32,6 +32,8 @@ router.post('/register/challenge', async (req, res) => {
     .maybeSingle();
 
   // 기존 패스키 조회 (excludeCredentials용)
+  const excludeCredentials = [];
+/*
   let excludeCredentials = [];
   if (user) {
     const { data: creds } = await supabase
@@ -45,7 +47,7 @@ router.post('/register/challenge', async (req, res) => {
       transports: c.transports || []
     }));
   }
-
+*/
   const options = await generateRegistrationOptions({
     rpName,
     rpID,
