@@ -163,12 +163,14 @@ router.post('/login/challenge', async (req, res) => {
 
   // ===== [카드 4 테스트용] allowCredentials 임시 비움 =====
   // T08 통과 후 아래 주석을 해제하고, 현재의 빈 배열 줄을 삭제하세요.
+  /*
   const options = await generateAuthenticationOptions({
     rpID,
     allowCredentials: [],
     userVerification: 'preferred'
   });
-  /*
+  */
+  // ★ 원래 코드 복구: DB 패스키로 제한
   const options = await generateAuthenticationOptions({
     rpID,
     allowCredentials: (creds || []).map(c => ({
@@ -178,7 +180,6 @@ router.post('/login/challenge', async (req, res) => {
     })),
     userVerification: 'preferred'
   });
-  */
 
   await supabase.from('challenges').delete().eq('username', username);
   await supabase.from('challenges').insert({
