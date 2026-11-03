@@ -161,22 +161,12 @@ router.post('/login/challenge', async (req, res) => {
     .select('credential_id, transports')
     .eq('user_id', user.id);
 
-  // ===== [카드 4 테스트용] allowCredentials 임시 비움 =====
-  // T08 통과 후 아래 주석을 해제하고, 현재의 빈 배열 줄을 삭제하세요.
-  /*
-  const options = await generateAuthenticationOptions({
-    rpID,
-    allowCredentials: [],
-    userVerification: 'preferred'
-  });
-  */
-  // ★ 원래 코드 복구: DB 패스키로 제한
+  // ★ allowCredentials: transports 제거, Uint8Array로 변환
   const options = await generateAuthenticationOptions({
     rpID,
     allowCredentials: (creds || []).map(c => ({
-      id: new Uint8Array(Buffer.from(c.credential_id, 'base64url')),
-      type: 'public-key',
-      transports: c.transports || []
+      id: Uint8Array.from(Buffer.from(c.credential_id, 'base64url')),
+      type: 'public-key'
     })),
     userVerification: 'preferred'
   });
