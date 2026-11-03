@@ -383,7 +383,7 @@
 
     // ===== 패스키 등록 =====
     async function registerPasskey() {
-      const username = prompt('사용자 이름을 입력하세요 (예: kms):');
+      const username = prompt('사용자 이름을 입력하세요 :');
       if (!username) return;
 
       try {
@@ -404,7 +404,7 @@
         const credential = await SimpleWebAuthnBrowser.startRegistration(options);
 
         // 3. 서버에 검증 요청
-        const credentialName = prompt('이 패스키의 이름을 입력하세요 (예: 내 노트북):') || '내 패스키';
+        const credentialName = prompt('이 패스키의 이름을 입력하세요 :') || '내 패스키';
         const verifyRes = await fetch(`${BACKEND_URL}/api/register/verify`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
