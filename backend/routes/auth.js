@@ -251,4 +251,60 @@ router.post('/logout', (req, res) => {
   req.session.destroy(() => res.json({ ok: true }));
 });
 
+// ===== 패스키 목록 조회 (C43) =====
+router.get('/credentials', async (req, res) => {
+  if (!req.session.userId) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  const { data: user } = await supabase
+    .from('users')
+    .select('id')
+    .eq('username', req.session.userId)
+    .maybeSingle();
+
+  if (!user) return res.status(404).json({ error: 'User not found' });
+
+  const { data: creds } = await supabase
+    .from('credentials')
+    .select('id, name, created_at')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: true });
+
+  res.json({ credentials: creds || [] });
+});
+
+// ===== 패스키 삭제 (C44, C45, C46) =====
+router.delete('/credentials/:id', async (req, res) => {
+  if (!req.session.userId) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  const { data: user } = await supabase
+    .from('users')
+    .select('id')
+    .eq('username', req.session.userId)
+    .maybeSingle();
+
+  if (!user) return res.status(404).json({ error: 'User not found' });
+
+  // 남은 패스키 개수 확인 (C46)
+  const { data: creds } = await supabase
+    .from('credentials')
+    .select('id')
+    .eq('user_id', user.id);
+
+  if (!creds || creds.length <= 1) {
+    return res.status(400).json({ error: '마지막 패스키는 삭제할 수 없습니다. 먼저 새 패스키를 등록하세요.' });
+  }
+
+  await supabase
+    .from('credentials')
+    .delete()
+    .eq('id', req.params.id)
+    .eq('user_id', user.id);
+
+  res.json({ ok: true });
+});
+
 module.exports = router;
