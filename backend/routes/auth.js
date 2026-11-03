@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
-const path = require('path');
+const { createClient } = require('@supabase/supabase-js');
 const {
   generateRegistrationOptions,
   verifyRegistrationResponse,
@@ -9,24 +8,11 @@ const {
   verifyAuthenticationResponse
 } = require('@simplewebauthn/server');
 
-const DB_PATH = path.join(__dirname, '../data/db.json');
-
-// DB 읽기/쓰기 (폴더 자동 생성 포함)
-function readDB() {
-  const dir = path.dirname(DB_PATH);
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
-  if (!fs.existsSync(DB_PATH)) {
-    const initial = { users: [], challenges: {} };
-    fs.writeFileSync(DB_PATH, JSON.stringify(initial, null, 2));
-    return initial;
-  }
-  return JSON.parse(fs.readFileSync(DB_PATH, 'utf-8'));
-}
-function writeDB(data) {
-  fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
-}
+// Supabase 클라이언트 (Secret key 사용)
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SECRET_KEY
+);
 
 // RP 설정
 const rpName = '김민석 소개 페이지';
@@ -38,16 +24,27 @@ router.post('/register/challenge', async (req, res) => {
   const { username } = req.body;
   if (!username) return res.status(400).json({ error: 'username required' });
 
-  const db = readDB();
-  const user = db.users.find(u => u.username === username);
+  // 기존 사용자 조회
+  const { data: user } = await supabase
+    .from('users')
+    .select('id, username')
+    .eq('username', username)
+    .maybeSingle();
 
-  const excludeCredentials = user
-    ? user.credentials.map(c => ({
-        id: new Uint8Array(Buffer.from(c.id, 'base64url')),
-        type: 'public-key',
-        transports: c.transports || []
-      }))
-    : [];
+  // 기존 패스키 조회 (excludeCredentials용)
+  let excludeCredentials = [];
+  if (user) {
+    const { data: creds } = await supabase
+      .from('credentials')
+      .select('credential_id, transports')
+      .eq('user_id', user.id);
+
+    excludeCredentials = (creds || []).map(c => ({
+      id: new Uint8Array(Buffer.from(c.credential_id, 'base64url')),
+      type: 'public-key',
+      transports: c.transports || []
+    }));
+  }
 
   const options = await generateRegistrationOptions({
     rpName,
@@ -62,9 +59,12 @@ router.post('/register/challenge', async (req, res) => {
     }
   });
 
-  // ★ 파일 대신 세션에 challenge 저장
-  req.session.challenge = options.challenge;
-  req.session.username = username;
+  // challenge를 Supabase에 저장 (이전 것 삭제)
+  await supabase.from('challenges').delete().eq('username', username);
+  await supabase.from('challenges').insert({
+    username,
+    challenge: options.challenge
+  });
 
   res.json(options);
 });
@@ -76,16 +76,23 @@ router.post('/register/verify', async (req, res) => {
     return res.status(400).json({ error: 'username and credential required' });
   }
 
-  // ★ 세션에서 challenge 꺼내기
-  const expectedChallenge = req.session.challenge;
-  if (!expectedChallenge) {
-    return res.status(400).json({ error: 'No challenge in session. Request challenge first.' });
+  // Supabase에서 challenge 조회
+  const { data: challengeRow } = await supabase
+    .from('challenges')
+    .select('challenge')
+    .eq('username', username)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (!challengeRow) {
+    return res.status(400).json({ error: 'No challenge found. Request challenge first.' });
   }
 
   try {
     const verification = await verifyRegistrationResponse({
       response: credential,
-      expectedChallenge,
+      expectedChallenge: challengeRow.challenge,
       expectedOrigin: origin,
       expectedRPID: rpID,
       requireUserVerification: false
@@ -97,33 +104,38 @@ router.post('/register/verify', async (req, res) => {
 
     const { credentialPublicKey, credentialID, counter } = verification.registrationInfo;
 
-    const db = readDB();
-    let user = db.users.find(u => u.username === username);
+    // 사용자 찾기 또는 생성
+    let { data: user } = await supabase
+      .from('users')
+      .select('id')
+      .eq('username', username)
+      .maybeSingle();
+
     if (!user) {
-      user = { username, credentials: [] };
-      db.users.push(user);
+      const { data: newUser } = await supabase
+        .from('users')
+        .insert({ username })
+        .select('id')
+        .single();
+      user = newUser;
     }
 
     // 공개키 저장 (C21) — 비밀번호 아님 (C22)
-    user.credentials.push({
-      id: Buffer.from(credentialID).toString('base64url'),
-      publicKey: Buffer.from(credentialPublicKey).toString('base64url'),
+    await supabase.from('credentials').insert({
+      user_id: user.id,
+      credential_id: Buffer.from(credentialID).toString('base64url'),
+      public_key: Buffer.from(credentialPublicKey).toString('base64url'),
       counter,
       transports: credential.response.transports || [],
-      name: credentialName || '내 패스키',
-      createdAt: new Date().toISOString()
+      name: credentialName || '내 패스키'
     });
 
-    writeDB(db);
-
-    // ★ 사용한 challenge는 세션에서 삭제
-    delete req.session.challenge;
-    delete req.session.username;
+    // 사용한 challenge 삭제
+    await supabase.from('challenges').delete().eq('username', username);
 
     res.json({ verified: true, message: '패스키가 등록되었습니다.' });
   } catch (err) {
     console.error('Register verify error:', err);
-    delete req.session.challenge;
     res.status(400).json({ error: err.message });
   }
 });
@@ -131,23 +143,35 @@ router.post('/register/verify', async (req, res) => {
 // ===== 로그인용 challenge (카드 3) =====
 router.post('/login/challenge', async (req, res) => {
   const { username } = req.body;
-  const db = readDB();
-  const user = db.users.find(u => u.username === username);
+
+  const { data: user } = await supabase
+    .from('users')
+    .select('id')
+    .eq('username', username)
+    .maybeSingle();
+
   if (!user) return res.status(404).json({ error: 'User not found' });
+
+  const { data: creds } = await supabase
+    .from('credentials')
+    .select('credential_id, transports')
+    .eq('user_id', user.id);
 
   const options = await generateAuthenticationOptions({
     rpID,
-    allowCredentials: user.credentials.map(c => ({
-      id: new Uint8Array(Buffer.from(c.id, 'base64url')),
+    allowCredentials: (creds || []).map(c => ({
+      id: new Uint8Array(Buffer.from(c.credential_id, 'base64url')),
       type: 'public-key',
       transports: c.transports || []
     })),
     userVerification: 'preferred'
   });
 
-  // ★ 세션에 challenge 저장
-  req.session.challenge = options.challenge;
-  req.session.username = username;
+  await supabase.from('challenges').delete().eq('username', username);
+  await supabase.from('challenges').insert({
+    username,
+    challenge: options.challenge
+  });
 
   res.json(options);
 });
@@ -155,28 +179,45 @@ router.post('/login/challenge', async (req, res) => {
 // ===== 로그인 검증 (카드 3) =====
 router.post('/login/verify', async (req, res) => {
   const { username, credential } = req.body;
-  const db = readDB();
-  const user = db.users.find(u => u.username === username);
+
+  const { data: user } = await supabase
+    .from('users')
+    .select('id')
+    .eq('username', username)
+    .maybeSingle();
+
   if (!user) return res.status(404).json({ error: 'User not found' });
 
-  // ★ 세션에서 challenge 꺼내기
-  const expectedChallenge = req.session.challenge;
-  if (!expectedChallenge) {
-    return res.status(400).json({ error: 'No challenge in session' });
+  const { data: challengeRow } = await supabase
+    .from('challenges')
+    .select('challenge')
+    .eq('username', username)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (!challengeRow) {
+    return res.status(400).json({ error: 'No challenge found' });
   }
 
-  const cred = user.credentials.find(c => c.id === credential.id);
+  const { data: cred } = await supabase
+    .from('credentials')
+    .select('*')
+    .eq('user_id', user.id)
+    .eq('credential_id', credential.id)
+    .maybeSingle();
+
   if (!cred) return res.status(400).json({ error: 'Credential not found' });
 
   try {
     const verification = await verifyAuthenticationResponse({
       response: credential,
-      expectedChallenge,
+      expectedChallenge: challengeRow.challenge,
       expectedOrigin: origin,
       expectedRPID: rpID,
       authenticator: {
-        credentialID: new Uint8Array(Buffer.from(cred.id, 'base64url')),
-        credentialPublicKey: new Uint8Array(Buffer.from(cred.publicKey, 'base64url')),
+        credentialID: new Uint8Array(Buffer.from(cred.credential_id, 'base64url')),
+        credentialPublicKey: new Uint8Array(Buffer.from(cred.public_key, 'base64url')),
         counter: cred.counter
       },
       requireUserVerification: false
@@ -186,18 +227,19 @@ router.post('/login/verify', async (req, res) => {
       return res.status(400).json({ error: 'Verification failed' });
     }
 
-    cred.counter = verification.authenticationInfo.newCounter;
-    writeDB(db);
+    // counter 업데이트
+    await supabase
+      .from('credentials')
+      .update({ counter: verification.authenticationInfo.newCounter })
+      .eq('id', cred.id);
 
-    // ★ 사용한 challenge는 세션에서 삭제
-    delete req.session.challenge;
-    delete req.session.username;
+    // challenge 삭제
+    await supabase.from('challenges').delete().eq('username', username);
 
     req.session.userId = username;
     res.json({ verified: true, message: '로그인 성공' });
   } catch (err) {
     console.error('Login verify error:', err);
-    delete req.session.challenge;
     res.status(400).json({ error: err.message });
   }
 });
