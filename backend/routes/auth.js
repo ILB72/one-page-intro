@@ -164,7 +164,7 @@ router.post('/login/challenge', async (req, res) => {
     allowCredentials: (creds || []).map(c => ({
       id: new Uint8Array(Buffer.from(c.credential_id, 'base64url')),
       type: 'public-key',
-      transports: c.transports || []
+      //transports: c.transports || []
     })),
     userVerification: 'preferred'
   });
