@@ -159,16 +159,22 @@ router.post('/login/challenge', async (req, res) => {
     .select('credential_id, transports')
     .eq('user_id', user.id);
 
+    const options = await generateAuthenticationOptions({
+  rpID,
+  allowCredentials: [],
+  userVerification: 'preferred'
+});
+/*
   const options = await generateAuthenticationOptions({
     rpID,
     allowCredentials: (creds || []).map(c => ({
       id: new Uint8Array(Buffer.from(c.credential_id, 'base64url')),
       type: 'public-key',
-      //transports: c.transports || []
+      transports: c.transports || []
     })),
     userVerification: 'preferred'
   });
-
+*/
   await supabase.from('challenges').delete().eq('username', username);
   await supabase.from('challenges').insert({
     username,
