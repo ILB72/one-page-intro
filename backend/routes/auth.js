@@ -44,7 +44,8 @@ router.post('/register/challenge', async (req, res) => {
   // 이미 등록된 패스키의 id를 Uint8Array로 변환 (에러 해결 핵심)
   const excludeCredentials = user
     ? user.credentials.map(c => ({
-        id: Buffer.from(c.id, 'base64url'),
+        id: new Uint8Array(Buffer.from(c.id, 'base64url')),
+        type: 'public-key',
         transports: c.transports || []
       }))
     : [];
@@ -133,7 +134,8 @@ router.post('/login/challenge', async (req, res) => {
   const options = await generateAuthenticationOptions({
     rpID,
     allowCredentials: user.credentials.map(c => ({
-      id: Buffer.from(c.id, 'base64url'),
+      id: new Uint8Array(Buffer.from(c.id, 'base64url')),
+      type: 'public-key',
       transports: c.transports || []
     })),
     userVerification: 'preferred'
@@ -167,8 +169,8 @@ router.post('/login/verify', async (req, res) => {
       expectedOrigin: origin,
       expectedRPID: rpID,
       authenticator: {
-        credentialID: Buffer.from(cred.id, 'base64url'),
-        credentialPublicKey: Buffer.from(cred.publicKey, 'base64url'),
+        credentialID: new Uint8Array(Buffer.from(cred.id, 'base64url')),
+        credentialPublicKey: new Uint8Array(Buffer.from(cred.publicKey, 'base64url')),
         counter: cred.counter
       },
       requireUserVerification: false
