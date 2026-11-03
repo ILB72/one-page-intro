@@ -4,9 +4,6 @@ backend/node_modules/
 # 환경변수 (절대 GitHub에 올리면 안 됨)
 backend/.env
 
-# 로컬 DB (공개키/세션 저장)
-backend/data/db.json
-
 # 로그/임시 파일
 *.log
 .DS_Store
