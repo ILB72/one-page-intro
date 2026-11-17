@@ -116,4 +116,4 @@ one-page-intro/
 </details>
 
 ## 연락
-canzone0@daum.net (이 소개 페이지 본문에는 연락처를 싣지 않았고, 저장소 문의용으로만 적습니다.)
+문의나 제안은 이 저장소의 [Issues](https://github.com/ILB72/one-page-intro/issues)를 이용해 주세요. 이 소개 페이지 본문에는 연락처를 싣지 않았습니다.
