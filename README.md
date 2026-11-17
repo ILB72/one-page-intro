@@ -51,9 +51,13 @@ npm start      # 기본 포트 3000
 | 변수 | 용도 |
 |---|---|
 | `SUPABASE_URL`, `SUPABASE_SECRET_KEY` | Supabase 접속 |
-| `SESSION_SECRET` | 세션 서명용 비밀 문자열 |
+| `SESSION_SECRET` | 세션 서명용 비밀 문자열. **프로덕션(`NODE_ENV=production`, Render)에서는 필수**이고 없으면 서버가 시작하지 않습니다. 개발 모드에서는 임시 값을 경고와 함께 씁니다. |
+| `PRIVATE_ITEMS_JSON` | 로그인한 사용자에게만 보여 줄 비공개 항목. 한 줄 JSON `{"사용자이름":[{"title":"...","content":"..."}]}`. 없으면 "서버에 비공개 항목이 설정되지 않았습니다"를 돌려줍니다. |
+| `ALLOWED_ORIGINS` | 허용할 프론트엔드 출처(쉼표 구분). 생략하면 `https://ilb72.github.io`와 로컬 5500 포트만 허용합니다. |
 | `RP_ID` | 패스키가 묶이는 도메인 (기본 `localhost`) |
 | `ORIGIN` | 프론트엔드 주소 (기본 `http://localhost:3000`) |
+
+`backend/.env.example`에 변수 이름만 정리돼 있습니다. 패스키를 이미 만든 계정에 다른 기기의 패스키를 추가하려면 **그 계정으로 로그인한 상태**여야 합니다(로그인 없이 기존 이름에 등록하면 401).
 
 Supabase에는 `users`, `credentials`, `challenges` 세 테이블이 필요합니다(코드가 사용하는 이름. 테이블 생성 SQL은 이 저장소에 없습니다).
 
