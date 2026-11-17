@@ -19,17 +19,40 @@ const rpName = '김민석 소개 페이지';
 const rpID = process.env.RP_ID || 'localhost';
 const origin = process.env.ORIGIN || 'http://localhost:3000';
 
+// 이미 존재하는 사용자에게 패스키를 추가하려면 같은 사용자로 로그인된 세션이 필요하다.
+// (새 사용자 이름의 최초 등록은 로그인 없이 허용 — 기존 데모 흐름 유지)
+// 허용되면 null, 거부되면 { status, error }를 반환한다.
+function checkRegisterPermission(req, user, username) {
+  if (!user) return null;
+  if (!req.session || !req.session.userId) {
+    return { status: 401, error: '이미 등록된 사용자입니다. 패스키를 추가하려면 먼저 해당 계정으로 로그인하세요.' };
+  }
+  if (req.session.userId !== username) {
+    return { status: 403, error: '로그인한 계정에만 패스키를 추가할 수 있습니다.' };
+  }
+  return null;
+}
+
 // ===== 등록용 challenge 생성 (C19, C20) =====
 router.post('/register/challenge', async (req, res) => {
   const { username } = req.body;
-  if (!username) return res.status(400).json({ error: 'username required' });
+  if (!username || typeof username !== 'string') {
+    return res.status(400).json({ error: 'username required' });
+  }
 
   // 기존 사용자 조회
-  const { data: user } = await supabase
+  const { data: user, error: userError } = await supabase
     .from('users')
     .select('id, username')
     .eq('username', username)
     .maybeSingle();
+
+  if (userError) return res.status(500).json({ error: 'User lookup failed' });
+
+  // 기존 사용자면 같은 계정으로 로그인된 경우에만 추가 등록 허용
+  // (challenge 삭제/저장 전에 검사해 남의 진행 중인 challenge를 지우지 못하게 함)
+  const denied = checkRegisterPermission(req, user, username);
+  if (denied) return res.status(denied.status).json({ error: denied.error });
 
   // ★ 원래 코드 복구: 이미 등록된 패스키 제외
   let excludeCredentials = [];
@@ -72,9 +95,21 @@ router.post('/register/challenge', async (req, res) => {
 // ===== 등록 검증 + 공개키 저장 (C21, C23) =====
 router.post('/register/verify', async (req, res) => {
   const { username, credential, credentialName } = req.body;
-  if (!username || !credential) {
+  if (!username || typeof username !== 'string' || !credential) {
     return res.status(400).json({ error: 'username and credential required' });
   }
+
+  // challenge 이후에 같은 이름이 먼저 등록된 경우까지 막기 위해 검증 단계에서도 다시 확인
+  const { data: existingUser, error: existingError } = await supabase
+    .from('users')
+    .select('id')
+    .eq('username', username)
+    .maybeSingle();
+
+  if (existingError) return res.status(500).json({ error: 'User lookup failed' });
+
+  const denied = checkRegisterPermission(req, existingUser, username);
+  if (denied) return res.status(denied.status).json({ error: denied.error });
 
   // Supabase에서 challenge 조회
   const { data: challengeRow } = await supabase
@@ -112,12 +147,20 @@ router.post('/register/verify', async (req, res) => {
       .maybeSingle();
 
     if (!user) {
-      const { data: newUser } = await supabase
+      const { data: newUser, error: insertError } = await supabase
         .from('users')
         .insert({ username })
         .select('id')
         .single();
+      if (insertError || !newUser) {
+        // 동시에 같은 이름이 생성된 경우 등: 남의 계정에 붙지 않도록 중단
+        return res.status(409).json({ error: '사용자 생성에 실패했습니다. 다시 시도하세요.' });
+      }
       user = newUser;
+    } else {
+      // 검증 도중 생성된 기존 사용자라면 다시 권한 확인
+      const deniedLate = checkRegisterPermission(req, user, username);
+      if (deniedLate) return res.status(deniedLate.status).json({ error: deniedLate.error });
     }
 
     // 공개키 저장 (C21) — 비밀번호 아님 (C22)
